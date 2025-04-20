@@ -14,6 +14,7 @@ namespace SineVita.Nelumbo {
         public Pitch Pitch { get; set; }
 
         // * lotus Properties
+            // to be defined during analysis and construction?
         public LotusStage Stage { get; set; }
 
             // independant - Budding Stage
