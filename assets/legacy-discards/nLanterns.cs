@@ -5,7 +5,7 @@ using Caprifolium;
 using SineVita.Muguet;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SineVita.Nelumbo {
+namespace altSineVita.Nelumbo {
     public class Lantern {
 
         // ! NEED TO ISOLATE SELF NODE LIST FROM LONICERA AND MIGRATE, MAYBE ENTIRELY TO KNAUTIA

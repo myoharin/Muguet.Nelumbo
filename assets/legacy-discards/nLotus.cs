@@ -3,7 +3,7 @@ using Microsoft.VisualBasic;
 using Caprifolium;
 using SineVita.Muguet;
 
-namespace SineVita.Nelumbo {
+namespace altSineVita.Nelumbo {
     public enum LotusStage {
         Budding = 0,
         Flowering = 1,

@@ -1,6 +1,6 @@
 using SineVita.Muguet;
 
-namespace SineVita.Nelumbo {
+namespace altSineVita.Nelumbo {
     public class Sultra {
         public List<Lantern> Lanterns { get; set; }
 

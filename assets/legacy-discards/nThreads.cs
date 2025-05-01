@@ -1,5 +1,5 @@
 using SineVita.Muguet;
-namespace SineVita.Nelumbo {
+namespace altSineVita.Nelumbo {
     public class LanternThread { // Used to quantitate the transition between two chords
         // * Flames
         public List<List<LotusThread>> Flames { get; set; }
