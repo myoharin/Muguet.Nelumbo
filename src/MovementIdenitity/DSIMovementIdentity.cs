@@ -1,5 +1,5 @@
-namespace SineVita.Nelumbo {
-    public enum DSIMovemengtIdentity {
+namespace SineVita.Muguet.Nelumbo {
+    public enum DSIMovementIdentity {
         DIM0,
         DIM1,
         DIM2,

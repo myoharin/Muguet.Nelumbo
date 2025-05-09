@@ -1,12 +1,15 @@
 using Caprifolium;
-using SineVita.Muguet;
 using System.Collections.Generic;
 
-namespace SineVita.Nelumbo {
-    public class Lantern {
+namespace SineVita.Muguet.Nelumbo {
+    internal class Lantern {
+        // * Object References
+        public LanternSutra Sutra { init; get; }
+
+ 
         // * Core Variable Management
         public Chord _chord;
-        public Chord Chord { get {return _chord;} }
+        public Chord Chord { get {return this._chord;} }
 
         // * Analysis DS
         public List<Lotus> Lotuses { get; set; }   
@@ -20,7 +23,8 @@ namespace SineVita.Nelumbo {
         // private static Func<Lotus, Lotus, Lotus, LotusTriad>
 
         // * Constructor
-        public Lantern() {
+        public Lantern(LanternSutra sutra) {
+            Sutra = sutra;
             _chord = new();
             Lotuses = new();
             LotusDyads = new(growth: (r, t) => new LotusDyad(r, t));

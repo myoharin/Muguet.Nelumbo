@@ -1,6 +1,4 @@
-C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Nelumbo.exe
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Nelumbo.deps.json
-C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Nelumbo.runtimeconfig.json
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Nelumbo.dll
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Nelumbo.pdb
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\Caprifolium.dll
@@ -14,6 +12,5 @@ C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineV
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Nelumbo.dll
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\refint\SineVita.Nelumbo.dll
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Nelumbo.pdb
-C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Nelumbo.genruntimeconfig.cache
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\ref\SineVita.Nelumbo.dll
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Nelumbo.sourcelink.json

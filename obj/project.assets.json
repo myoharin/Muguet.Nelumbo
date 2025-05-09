@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj",
-      "projectName": "SineVita.Nelumbo",
-      "projectPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj",
+      "projectUniqueName": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj",
+      "projectName": "SineVita.Muguet.Nelumbo",
+      "projectPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj",
       "packagesPath": "C:\\Users\\tomin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\obj\\",
       "projectStyle": "PackageReference",
@@ -63,10 +63,6 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.13, 8.0.13]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
             "version": "[8.0.13, 8.0.13]"
           },
           {

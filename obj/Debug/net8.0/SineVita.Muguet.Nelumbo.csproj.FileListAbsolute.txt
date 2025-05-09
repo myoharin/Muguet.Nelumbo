@@ -1,0 +1,16 @@
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.csproj.AssemblyReference.cache
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.AssemblyInfoInputs.cache
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.AssemblyInfo.cs
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.csproj.CoreCompileInputs.cache
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.sourcelink.json
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.Nelumbo.deps.json
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.Nelumbo.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.Nelumbo.pdb
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\Caprifolium.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.FB9D8EFA.Up2Date
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\refint\SineVita.Muguet.Nelumbo.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.pdb
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\ref\SineVita.Muguet.Nelumbo.dll

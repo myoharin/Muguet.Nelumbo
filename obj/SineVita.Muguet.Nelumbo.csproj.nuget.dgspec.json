@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj": {}
+    "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj": {
+    "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj",
-        "projectName": "SineVita.Nelumbo",
-        "projectPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Nelumbo.csproj",
+        "projectUniqueName": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj",
+        "projectName": "SineVita.Muguet.Nelumbo",
+        "projectPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\SineVita.Muguet.Nelumbo.csproj",
         "packagesPath": "C:\\Users\\tomin\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\tomin\\OneDrive\\Documents\\GitHub\\SineVita.Nelumbo\\obj\\",
         "projectStyle": "PackageReference",
