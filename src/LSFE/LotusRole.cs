@@ -16,12 +16,29 @@ namespace SineVita.Muguet.Nelumbo {
         sA = 5,
         sD = 6,
 
-        // derived ones
+        // deriviation
         Lsus2 = 7,
         Lsus4 = 8,
 
         susM = 9,
         sus3 = 9,
+
+        // microtonal 3rds
+        Ssm3 = 10,
+        Sd3 = 10,
+
+        Sdm3 = 11,
+        SUm3 = 11,
+
+        SSM3 = 12,
+        SA3 = 12,
+
+        SUM3 = 13,
+        SAM3 = 13,
+
+        Sn3 = 14,
+        Snu3 = 14,
+        Sneu3 = 14,
 
     }
 }

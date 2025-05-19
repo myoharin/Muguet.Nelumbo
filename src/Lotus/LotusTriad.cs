@@ -7,9 +7,9 @@ namespace SineVita.Muguet.Nelumbo {
         public Lotus Median { init; get; }
         public Lotus Terminal { init; get; }
 
-        public Lotus Bottom { get {return Root;} }
-        public Lotus Middle { get {return Median;} }
-        public Lotus Top { get {return Terminal;} }
+        public Lotus Bottom { get {return this.Root;} }
+        public Lotus Middle { get {return this.Median;} }
+        public Lotus Top { get {return this.Terminal;} }
 
         public PitchInterval intervalTM { get {
             return PitchInterval.CreateInterval(this.Median.Pitch, this.Terminal.Pitch, true);

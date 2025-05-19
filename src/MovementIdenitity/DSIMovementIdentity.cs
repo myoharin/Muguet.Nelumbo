@@ -8,5 +8,5 @@ namespace SineVita.Muguet.Nelumbo {
         AUG1,
         AUG2,
         AUG3
-    }
+    } // ! COULD BE REDUNDANT
 }

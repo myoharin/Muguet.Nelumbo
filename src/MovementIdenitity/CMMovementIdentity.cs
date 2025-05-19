@@ -16,5 +16,5 @@ namespace SineVita.Muguet.Nelumbo {
         MDM3M,
         MUm3M,
         MUM3M
-    }
+    } // ! COULD BE REDUNDANT
 }

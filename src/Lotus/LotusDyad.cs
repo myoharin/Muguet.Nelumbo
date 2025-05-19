@@ -19,7 +19,7 @@ namespace SineVita.Muguet.Nelumbo {
         }
 
         public void AssignRoles() {
-            
+             
         }
     }
 }
