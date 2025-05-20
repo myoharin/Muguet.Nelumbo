@@ -127,16 +127,29 @@ namespace SineVita.Muguet.Nelumbo.Internal {
                     } // [A C] G
                 }
                 
-                // * TODO Limmatic Suspended Mediants - only look at tonic
-                // ! Need to evalutae 5th inverted Limmatic Interval
-                if (root.HasRole(LotusRole.StructuralTonic) && // Lsus2
-                    Context.Evaluate(reducedInterval, FormalIntervalClassification.Limma)) {
-                    root.AddRole(LotusRole.ST);
-                    terminal.AddRole(LotusRole.SM3);
+                // * Limmatic Suspended Mediants - only look at tonic
+                    // Lsus2
+                    // Root ST: C G C# / C C# G / G C C# - DONE
+                    // Terminal ST: C# G C / C# C G / G C# C - Inverted Limma
+                    
+                    // Lsus4
+                    // Root SD: C G F# / G C F# / G F# C - Inverted Limma
+                    // Terminal SD F# C G / F# G C / C F# G - DONE
+                if (Context.Evaluate(PitchInterval.Abs(reducedInterval.Decremented(PitchInterval.Octave)),
+                        FormalIntervalClassification.Limma)) { // check if interval is inverted Limma
+                    if (root.HasRole(LotusRole.SD)) terminal.AddRole(LotusRole.Lsus4);
+                    if (terminal.HasRole(LotusRole.ST)) root.AddRole(LotusRole.Lsus2);
+                }
+                if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Limma)) {
+                    if (root.HasRole(LotusRole.ST)) terminal.AddRole(LotusRole.Lsus2);
+                    if (terminal.HasRole(LotusRole.SD)) terminal.AddRole(LotusRole.Lsus4);
                 }
             }
             
             
         }
+        
+        
+        
     }
 }
