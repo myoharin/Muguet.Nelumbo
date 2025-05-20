@@ -4,12 +4,12 @@ namespace SineVita.Muguet.Nelumbo {
     public class LotusThread
     {
         // * References
-        public required Lotus Antecedent { init; get; }
-        public required Lotus Consequent { init; get; }
+        public Lotus Antecedent { init; get; }
+        public Lotus Consequent { init; get; }
         public SutraContext Context => Antecedent.Context;
         
         // * Properties
-        public required ThreadMovement Movement { init; get; }
+        public ThreadMovement Movement { init; get; }
         
         // * Constructor
         public LotusThread(Lotus antecedent, Lotus consequent) {

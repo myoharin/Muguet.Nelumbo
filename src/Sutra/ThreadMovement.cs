@@ -1,6 +1,8 @@
-﻿namespace SineVita.Muguet.Nelumbo
+﻿using SineVita.Muguet.Nelumbo.LSFE;
+
+namespace SineVita.Muguet.Nelumbo
 {
-    public class ThreadMovement
+    public class ThreadMovement : ILSFEParsable<ThreadMovement>
     {
         public ThreadMovement(LotusThread thread) {
             Thread = thread;
@@ -26,6 +28,12 @@
         
         public bool IsGlm => IsGenericLocalMovement;
         public bool IsGenericLocalMovement => GenericLocalMovement != GenericLocalMovement.NA;
-
+        
+        // * LSFE
+        public string ToLSFE() {
+            return IsGenericLocalMovement
+                ? GenericLocalMovement.ToString()
+                : Interval.ToString() ?? ""; // TODO get rid of null ref safeguard
+        }
     }
 }

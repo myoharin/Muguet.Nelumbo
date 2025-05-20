@@ -1,5 +1,5 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.LSFE {
     public class LSFEHelper {
-
+        
     }
 }

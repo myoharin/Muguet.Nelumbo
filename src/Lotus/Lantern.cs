@@ -11,8 +11,10 @@ namespace SineVita.Muguet.Nelumbo {
         // * Core Variable Management
         private Chord _chord;
         public IReadOnlyChord Chord => _chord.Clone();
-    
         public List<Lotus> Lotuses { get; set; }
+        
+        // * Derived Gets
+        public int Count => Lotuses.Count;
 
         // * Constructor
         public Lantern(LanternSutra sutra, Chord chord) {
