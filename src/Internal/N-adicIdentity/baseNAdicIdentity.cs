@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.Internal {
     internal abstract class NAdicIdenitity {
         
     }

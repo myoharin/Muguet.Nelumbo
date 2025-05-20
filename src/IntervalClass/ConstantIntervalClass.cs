@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.IntervalClass {
     public sealed class ConstantIntervalClass : FormalIntervalClassification {
         public ConstantInterval Interval { init; get; }
         public ConstantIntervalClass(ConstantInterval interval) {

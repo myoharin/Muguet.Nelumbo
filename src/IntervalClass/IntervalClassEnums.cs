@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.IntervalClass {
     public enum FunctionalIntervalSuffix{
         Second = 2,
         Third = 3,

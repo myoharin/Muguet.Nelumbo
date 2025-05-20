@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.IntervalClass {
     public sealed class FunctionalIntervalClass : FormalIntervalClassification {
         public FunctionalIntervalPrefix Prefix { init; get; }
         public FunctionalIntervalSuffix Suffix { init; get; }

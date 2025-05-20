@@ -1,5 +1,5 @@
 namespace SineVita.Muguet.Nelumbo {
-    public enum GenericLocalMovement {
+    public enum GenericLocalMovementEnum {
         U = 0,
 
         UL = 1,

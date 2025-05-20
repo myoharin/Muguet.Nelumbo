@@ -1,6 +1,4 @@
-using SineVita.Muguet;
-
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.Internal {
     internal abstract class LotusStrand {
         // * Lotus References
         public required Lotus Antecedent { init; get; }
@@ -12,5 +10,4 @@ namespace SineVita.Muguet.Nelumbo {
             Consequent = consequent;
         }
     }
-
 }

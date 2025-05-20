@@ -20,4 +20,8 @@
     <Compile Remove="assets\legacy-discards\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\Internal\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.IntervalClass {
     public abstract class FormalIntervalClassification : 
         IEquatable<FormalIntervalClassification>
     {
