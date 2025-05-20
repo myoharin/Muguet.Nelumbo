@@ -2,8 +2,8 @@ using Caprifolium;
 using System.Collections.Generic;
 using SineVita.Muguet.Nelumbo.IntervalClass;
 
-namespace SineVita.Muguet.Nelumbo.Internal {
-    internal class Lantern {
+namespace SineVita.Muguet.Nelumbo {
+    public class Lantern {
         // * Object References
         public LanternSutra Sutra { init; get; }
         public SutraContext Context => Sutra.Context;

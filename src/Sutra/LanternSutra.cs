@@ -1,5 +1,5 @@
-namespace SineVita.Muguet.Nelumbo.Internal {
-    internal class LanternSutra {
+namespace SineVita.Muguet.Nelumbo {
+    public class LanternSutra {
         private NelumboAnalyser _analyser;
         private List<Lantern> _lanterns;
         public SutraContext Context => _analyser.Context;

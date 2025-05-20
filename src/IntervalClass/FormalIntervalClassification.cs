@@ -5,6 +5,10 @@ namespace SineVita.Muguet.Nelumbo.IntervalClass {
         public abstract bool Equals(FormalIntervalClassification? other);
 
         // * ConstantInterval
+        public static ConstantIntervalClass Unison => new ConstantIntervalClass(ConstantInterval.Unison);
+        public static ConstantIntervalClass U => Unison;
+        public static ConstantIntervalClass u => Unison;
+        
         public static ConstantIntervalClass Limma => new ConstantIntervalClass(ConstantInterval.Limma);
         public static ConstantIntervalClass L => Limma;
 

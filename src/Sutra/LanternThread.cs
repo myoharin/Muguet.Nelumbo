@@ -1,5 +1,5 @@
-namespace SineVita.Muguet.Nelumbo.Internal {
-    internal class LanternThread {
+namespace SineVita.Muguet.Nelumbo {
+    public class LanternThread {
         // * Lantern References
         public required Lantern Antecedent { init; get; }
         public required Lantern Consequent { init; get; }

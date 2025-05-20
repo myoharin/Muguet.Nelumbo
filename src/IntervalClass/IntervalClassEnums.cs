@@ -18,6 +18,7 @@ namespace SineVita.Muguet.Nelumbo.IntervalClass {
         Ultramajor = 3, AugmentedMajor = 3, UM = 3, AM = 3
     }
     public enum ConstantInterval {
+        Unison = 0, U = 0, u = 0,
         Limma = 1, L = 1,
         Shimmer = 2, ShimmerDiesis = 2, S = 2, s = 2,
         Octave = 3, O = 3, o = 3

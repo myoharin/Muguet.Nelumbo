@@ -1,8 +1,7 @@
 using SineVita.Muguet;
 
-namespace SineVita.Muguet.Nelumbo.Internal {
-
-    internal class Lotus {
+namespace SineVita.Muguet.Nelumbo {
+    public class Lotus {
         // * Object References
         public Lantern Lantern { init; get; }
         public SutraContext Context => Lantern.Context;

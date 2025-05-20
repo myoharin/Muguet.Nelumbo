@@ -1,6 +1,6 @@
-namespace SineVita.Muguet.Nelumbo.Internal
+namespace SineVita.Muguet.Nelumbo
 {
-    internal class LotusDyad
+    public class LotusDyad
     {
         public LotusDyad(Lotus root, Lotus terminal) {
             Root = root;

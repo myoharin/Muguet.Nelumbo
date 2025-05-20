@@ -1,6 +1,6 @@
-namespace SineVita.Muguet.Nelumbo.Internal
+namespace SineVita.Muguet.Nelumbo
 {
-    internal class LotusTriad // may be a redundant class
+    public class LotusTriad // may be a redundant class
     {
         // * Derived Gets
 
