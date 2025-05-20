@@ -6,13 +6,16 @@ namespace SineVita.Muguet.Nelumbo {
         // * References
         public required Lotus Antecedent { init; get; }
         public required Lotus Consequent { init; get; }
+        public SutraContext Context => Antecedent.Context;
+        
+        // * Properties
         public required ThreadMovement Movement { init; get; }
         
         // * Constructor
         public LotusThread(Lotus antecedent, Lotus consequent) {
             Antecedent = antecedent;
             Consequent = consequent;
-            Movement = new(PitchInterval.CreateInterval(antecedent.Pitch, consequent.Pitch, false, false));
+            Movement = new(this);
         }
         
         // * Enumerate Strands
