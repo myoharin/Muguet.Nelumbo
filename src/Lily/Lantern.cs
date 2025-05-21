@@ -36,9 +36,6 @@ namespace SineVita.Muguet.Nelumbo.Lily {
         private void AssignLotusRoles() { // TODO make this centrally modifiable
             Lonicera<Lotus, LotusDyad> dyads = new(growth: (r, t) => new LotusDyad(r, t));
             
-            // Knautia<Lotus, LotusTriad> triads = new(3, growth: (lotuses) => new LotusTriad(lotuses[0], lotuses[1], lotuses[2]));
-            // ^ Redundant
-            
             // * Initialize Lonicera
             dyads.AddRange(Lotuses, true);
             
@@ -49,6 +46,10 @@ namespace SineVita.Muguet.Nelumbo.Lily {
                 if (Context.Evaluate(reducedInterval, FormalIntervalClassification.P5)) {
                     dyad.Root.AddRole(LotusRole.StructuralTonic);
                     dyad.Terminal.AddRole(LotusRole.StructuralDominant);
+                }   
+                if (Context.Evaluate(reducedInterval, FormalIntervalClassification.P4)) {
+                    dyad.Root.AddRole(LotusRole.StructuralDominant);
+                    dyad.Terminal.AddRole(LotusRole.StructuralTonic);
                 }   
                 
                 // Direct Stress
@@ -79,78 +80,108 @@ namespace SineVita.Muguet.Nelumbo.Lily {
                 var reducedInterval = dyad.ReducedInterval;
                 var root = dyad.Root;
                 var terminal = dyad.Terminal;
+                
+                // interval is
+                var isMajor3 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd);
+                var isMinor3 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd);
+                var isMajor6 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th);
+                var isMinor6 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th);
+
+                var rootIsTonic = root.HasRole(LotusRole.StructuralTonic);
+                var rootIsDominant = root.HasRole(LotusRole.StructuralDominant);
+                var terminalIsTonic = terminal.HasRole(LotusRole.StructuralTonic);
+                var terminalIsDominant = terminal.HasRole(LotusRole.StructuralDominant);
                
                 // Structural Mediants - only look at tonic
-                if (root.HasRole(LotusRole.StructuralTonic)) {
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd)) {
+                if (rootIsTonic) {
+                    if (isMajor3) {
                         terminal.AddRole(LotusRole.SM3);
                     }
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd)) {
+                    if (isMinor3) {
                         terminal.AddRole(LotusRole.Sm3);
                     }
                 }
-                if (terminal.HasRole(LotusRole.StructuralTonic)) {
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th)) {
+                if (terminalIsTonic) {
+                    if (isMinor6) {
                         root.AddRole(LotusRole.SM3);
                     }
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th)) {
+                    if (isMajor6) {
                         root.AddRole(LotusRole.Sm3);
                     }
                 }
                 
+                // * Limmatically Suspended Mediants
+                if (Context.Evaluate(PitchInterval.Abs(reducedInterval.Decremented(PitchInterval.Octave)),
+                        FormalIntervalClassification.Limma)) { // check if interval is inverted Limma
+                    if (rootIsDominant) terminal.AddRole(LotusRole.Lsus4); // G F# + C
+                    if (terminalIsTonic) root.AddRole(LotusRole.Lsus2); // C# C + G
+                }
+                if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Limma)) {
+                    if (rootIsTonic) terminal.AddRole(LotusRole.Lsus2); // C C# + G
+                    if (terminalIsDominant) root.AddRole(LotusRole.Lsus4); // F# G + C
+                }
+            }
+            
+            // * 4th pass - tail end implications
+            foreach (var dyad in dyads.Links) {
+                var reducedInterval = dyad.ReducedInterval;
+                var root = dyad.Root;
+                var terminal = dyad.Terminal;
+
+                // interval is
+                var isMajor3 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd);
+                var isMinor3 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd);
+                var isMajor6 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th);
+                var isMinor6 = Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th);
+
+                var rootIsTonic = root.HasRole(LotusRole.StructuralTonic);
+                var rootIsDominant = root.HasRole(LotusRole.StructuralDominant);
+                var terminalIsTonic = terminal.HasRole(LotusRole.StructuralTonic);
+                var terminalIsDominant = terminal.HasRole(LotusRole.StructuralDominant);
+                
                 // * Dual Structural Implication
-                if (root.HasRole(LotusRole.StructuralDominant)) { // C [G B|Bb]
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd) ||
-                        Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th)
-                        ) {
+                if (rootIsDominant) { // C [G B|Bb]
+                    if (isMajor3) {
                         root.AddRole(LotusRole.Sm3);
                         terminal.AddRole(LotusRole.SD);
                     } // C [G B]
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd) ||
-                        Context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th)
-                        ) {
+                    if (isMinor3) {
                         root.AddRole(LotusRole.SM3);
                         terminal.AddRole(LotusRole.SD);
                     }  // C [G Bb]
                 }
-                if (terminal.HasRole(LotusRole.StructuralTonic)) { // [Ab|A C] G
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd) ||
-                        Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th)
-                        ) {
+                if (rootIsTonic) { // C] G [Ab|A
+                    if (isMajor6) {
+                        root.AddRole(LotusRole.Sm3);
+                        terminal.AddRole(LotusRole.ST);
+                    }
+                    if (isMinor6) {
+                        root.AddRole(LotusRole.SM3);
+                        terminal.AddRole(LotusRole.ST);
+                    }
+                }
+                if (terminalIsDominant) { // Bb|B] C [G
+                    if (isMajor6) {
+                        root.AddRole(LotusRole.SD);
+                        terminal.AddRole(LotusRole.SM3);
+                    } // [Ab C] G
+                    if (isMinor6) {
+                        root.AddRole(LotusRole.SD);
+                        terminal.AddRole(LotusRole.Sm3);
+                    } // [A C] G
+                }
+                if (terminalIsTonic) { // [Ab|A C] G
+                    if (isMajor3) {
                         root.AddRole(LotusRole.ST);
                         terminal.AddRole(LotusRole.SM3);
                     } // [Ab C] G
-                    if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd) ||
-                        Context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th)
-                        ) {
+                    if (isMinor3) {
                         root.AddRole(LotusRole.ST);
                         terminal.AddRole(LotusRole.Sm3);
                     } // [A C] G
                 }
-                
-                    /*
-                    Limmatic Suspended Mediants - only look at tonic
-                    Lsus2
-                    Root ST: C G C# / C C# G / G C C# - DONE
-                    Terminal ST: C# G C / C# C G / G C# C - Inverted Limma
-                    
-                    Lsus4
-                    Root SD: C G F# / G C F# / G F# C - Inverted Limma
-                    Terminal SD F# C G / F# G C / C F# G - DONE
-                    */
-                    
-                if (Context.Evaluate(PitchInterval.Abs(reducedInterval.Decremented(PitchInterval.Octave)),
-                        FormalIntervalClassification.Limma)) { // check if interval is inverted Limma
-                    if (root.HasRole(LotusRole.SD)) terminal.AddRole(LotusRole.Lsus4);
-                    if (terminal.HasRole(LotusRole.ST)) root.AddRole(LotusRole.Lsus2);
-                }
-                if (Context.Evaluate(reducedInterval, FormalIntervalClassification.Limma)) {
-                    if (root.HasRole(LotusRole.ST)) terminal.AddRole(LotusRole.Lsus2);
-                    if (terminal.HasRole(LotusRole.SD)) terminal.AddRole(LotusRole.Lsus4);
-                }
             }
-            
-            
+
         }
         
         

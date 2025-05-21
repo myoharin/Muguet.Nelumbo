@@ -5,79 +5,104 @@ namespace SineVita.Muguet.Nelumbo.Context
     public partial class SutraContext
     {
         // * Default values
-        internal static Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> DefaultInternalEvaluation { get {
+        private static Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> DefaultInternalEvaluation { get {
             var tolerance = 6; // cents
+            var classPitchPairs = new List<(FormalIntervalClassification IntervalClass, PitchInterval interval)>() {
+                (FormalIntervalClassification.Shimmer, new FloatPitchInterval(1, 30)),
+                (FormalIntervalClassification.Limma, new MidiPitchInterval(1)),
+                (FormalIntervalClassification.Unison, PitchInterval.Unison),
+                (FormalIntervalClassification.Minor2nd, new MidiPitchInterval(1)),
+                (FormalIntervalClassification.Major2nd, new MidiPitchInterval(2)),
+                (FormalIntervalClassification.Minor3rd, new MidiPitchInterval(3)),
+                (FormalIntervalClassification.Major3rd, new MidiPitchInterval(4)),
+                (FormalIntervalClassification.Perfect4th, new MidiPitchInterval(5)),
+                (FormalIntervalClassification.Tritone, new MidiPitchInterval(6)),
+                (FormalIntervalClassification.Perfect5th, new MidiPitchInterval(7)),
+                (FormalIntervalClassification.Minor6th, new MidiPitchInterval(8)),
+                (FormalIntervalClassification.Major6th, new MidiPitchInterval(9)),
+                (FormalIntervalClassification.Minor7th, new MidiPitchInterval(10)),
+                (FormalIntervalClassification.Major7th, new MidiPitchInterval(11)),
+                (FormalIntervalClassification.Octave, PitchInterval.Octave)
+            };
             
             var eval = new Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>>();
-            eval[FormalIntervalClassification.Shimmer]     = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 30)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Limma]       = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(1)) < new FloatPitchInterval(0, tolerance);
+            var toleranceInterval = (new FloatPitchInterval(1, tolerance));
+            foreach (var pair in classPitchPairs) {
+                eval[pair.IntervalClass] = (x) => {
+                    var value = PitchInterval.Abs(x.ToPitchInterval() - pair.interval) < toleranceInterval;
+                    // value = x.ToPitchInterval().Equals(pair.interval);
+                    // Console.Out.WriteLine($"{value}: {PitchInterval.Abs(x.ToPitchInterval() - pair.interval).ToMidiValue} < {toleranceInterval.ToMidiValue}");
+                    // Console.Out.WriteLine($"{value}: {x.ToMidiValue} == {pair.interval.ToMidiValue}");
+                    return value;
+                };
+            }
             
-            eval[FormalIntervalClassification.Minor2nd]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(1)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major2nd]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(2)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor3rd]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(3)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major3rd]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(4)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Perfect4th]  = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(5)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Tritone]     = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(6)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Perfect5th]  = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(7)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor6th]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(8)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major6th]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(9)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor7th]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(10)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major7th]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(11)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Octave] = (x) => x.ToPitchInterval() == PitchInterval.Octave;
             return eval;
         } }
         private static Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> ExperimentalEvaluation { get {
             var tolerance = 6; // cents
-            
+
+            var classPitchPairs = new List<(FormalIntervalClassification IntervalClass, PitchInterval Interval)>
+            {
+                (FormalIntervalClassification.Shimmer, new FloatPitchInterval(1, 30)),
+                (FormalIntervalClassification.Limma, new MidiPitchInterval(1)),
+                (FormalIntervalClassification.Subminor2nd, new FloatPitchInterval(1, 50)),
+                (FormalIntervalClassification.Minor2nd, new MidiPitchInterval(1)),
+                (FormalIntervalClassification.Neutral2nd, new FloatPitchInterval(1, 150)),
+                (FormalIntervalClassification.Major2nd, new MidiPitchInterval(2)),
+                (FormalIntervalClassification.Supermajor2nd, new FloatPitchInterval(1, 250)),
+                
+                (FormalIntervalClassification.Subminor3rd, new FloatPitchInterval(1, 250)),
+                (FormalIntervalClassification.Minor3rd, new MidiPitchInterval(3)),
+                (FormalIntervalClassification.Neutral3rd, new FloatPitchInterval(1, 350)),
+                (FormalIntervalClassification.Major3rd, new MidiPitchInterval(4)),
+                (FormalIntervalClassification.Supermajor3rd, new FloatPitchInterval(1, 450)),
+                
+                (FormalIntervalClassification.Subminor4th, new FloatPitchInterval(1, 450)),
+                (FormalIntervalClassification.Minor4th, new FloatPitchInterval(1, 475)),
+                (FormalIntervalClassification.Perfect4th, new MidiPitchInterval(5)),
+                (FormalIntervalClassification.Major4th, new FloatPitchInterval(1, 525)),
+                (FormalIntervalClassification.Supermajor4th, new FloatPitchInterval(1, 550)),
+                
+                (FormalIntervalClassification.SubminorTritone, new FloatPitchInterval(1, 550)),
+                (FormalIntervalClassification.MinorTritone, new FloatPitchInterval(1, 575)),
+                (FormalIntervalClassification.Tritone, new MidiPitchInterval(6)),
+                (FormalIntervalClassification.MajorTritone, new FloatPitchInterval(1, 625)),
+                (FormalIntervalClassification.SupermajorTritone, new FloatPitchInterval(1, 650)),
+                
+                (FormalIntervalClassification.Subminor5th, new FloatPitchInterval(1, 650)),
+                (FormalIntervalClassification.Minor5th, new FloatPitchInterval(1, 675)),
+                (FormalIntervalClassification.Perfect5th, new MidiPitchInterval(7)),
+                (FormalIntervalClassification.Major5th, new FloatPitchInterval(1, 725)),
+                (FormalIntervalClassification.Supermajor5th, new FloatPitchInterval(1, 750)),
+                
+                (FormalIntervalClassification.Subminor6th, new FloatPitchInterval(1, 750)),
+                (FormalIntervalClassification.Minor6th, new MidiPitchInterval(8)),
+                (FormalIntervalClassification.Neutral6th, new FloatPitchInterval(1, 850)),
+                (FormalIntervalClassification.Major6th, new MidiPitchInterval(9)),
+                (FormalIntervalClassification.Supermajor6th, new FloatPitchInterval(1, 950)),
+                
+                (FormalIntervalClassification.Subminor7th, new FloatPitchInterval(1, 950)),
+                (FormalIntervalClassification.Minor7th, new MidiPitchInterval(10)),
+                (FormalIntervalClassification.Neutral7th, new FloatPitchInterval(1, 1050)),
+                (FormalIntervalClassification.Major7th, new MidiPitchInterval(11)),
+                (FormalIntervalClassification.Supermajor7th, new FloatPitchInterval(1, 1150)),
+                
+                (FormalIntervalClassification.Octave, PitchInterval.Octave)
+            };
+
             var eval = new Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>>();
-            eval[FormalIntervalClassification.Shimmer]            = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 30)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Limma]              = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(1)) < new FloatPitchInterval(0, tolerance);
-            
-            eval[FormalIntervalClassification.Subminor2nd]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 50)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor2nd]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(1)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Neutral2nd]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 150)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major2nd]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(2)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor2nd]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 250)) < new FloatPitchInterval(0, tolerance);
 
-            eval[FormalIntervalClassification.Subminor3rd]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 250)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor3rd]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(3)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Neutral3rd]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 350)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major3rd]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(4)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor3rd]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 450)) < new FloatPitchInterval(0, tolerance);
+            foreach (var pair in classPitchPairs)
+            {
+                eval[pair.IntervalClass] = (x) => PitchInterval.Abs(x.ToPitchInterval() - pair.Interval) < new FloatPitchInterval(1, tolerance);
+            }
 
-            eval[FormalIntervalClassification.Subminor4th]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 450)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor4th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 475)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Perfect4th]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(5)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major4th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 525)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor4th]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 550)) < new FloatPitchInterval(0, tolerance);
-
-            eval[FormalIntervalClassification.SubminorTritone]    = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 550)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.MinorTritone]       = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 575)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Tritone]            = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(6)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.MajorTritone]       = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 625)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.SupermajorTritone]  = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 650)) < new FloatPitchInterval(0, tolerance);
-
-            eval[FormalIntervalClassification.Subminor5th]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 650)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor5th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 675)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Perfect5th]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(7)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major5th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 725)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor5th]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 750)) < new FloatPitchInterval(0, tolerance);
-
-            eval[FormalIntervalClassification.Subminor6th]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 750)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor6th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(8)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Neutral6th]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 850)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major6th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(9)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor6th]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 950)) < new FloatPitchInterval(0, tolerance);
-
-            eval[FormalIntervalClassification.Subminor7th]        = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 950)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Minor7th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(10)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Neutral7th]         = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 1050)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Major7th]           = (x) => PitchInterval.Abs(x.ToPitchInterval() - new MidiPitchInterval(11)) < new FloatPitchInterval(0, tolerance);
-            eval[FormalIntervalClassification.Supermajor7th]      = (x) => PitchInterval.Abs(x.ToPitchInterval() - new FloatPitchInterval(0, 1150)) < new FloatPitchInterval(0, tolerance);
-
-            eval[FormalIntervalClassification.Octave] = (x) => x.ToPitchInterval() == PitchInterval.Octave;
             return eval;
         } }
+        
+        
+        // * Presets
         public static SutraContext Default => new SutraContext();
 
     }

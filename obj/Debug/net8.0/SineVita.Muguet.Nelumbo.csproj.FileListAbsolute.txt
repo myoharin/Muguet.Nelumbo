@@ -14,3 +14,6 @@ C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineV
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\refint\SineVita.Muguet.Nelumbo.dll
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.pdb
 C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\ref\SineVita.Muguet.Nelumbo.dll
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.Nelumbo.exe
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\bin\Debug\net8.0\SineVita.Muguet.Nelumbo.runtimeconfig.json
+C:\Users\tomin\OneDrive\Documents\GitHub\SineVita.Nelumbo\obj\Debug\net8.0\SineVita.Muguet.Nelumbo.genruntimeconfig.cache

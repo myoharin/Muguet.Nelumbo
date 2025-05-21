@@ -18,17 +18,20 @@ namespace SineVita.Muguet.Nelumbo.Lily {
             _roles = new();
         }
 
-        // * LotusRoles Managment
+        // * LotusRoles Management
         public bool HasRole(LotusRole role) => _roles.Contains(role);
         public void AddRole(LotusRole role) {
-            if (!HasRole(role)) _roles.Add(role);
+            if (HasRole(role)) return;
+            for (int i = 0; i < _roles.Count; ++i) {
+                if (_roles[i] > role) {
+                    _roles.Insert(i,role);
+                    return;
+                }
+            }
+            _roles.Add(role);
         }
         public bool RemoveRole(LotusRole role) => _roles.Remove(role);
         public void ResetRoles() => _roles.Clear();
-     
-
-
-
     }
 
 }

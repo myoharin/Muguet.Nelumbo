@@ -16,6 +16,10 @@ namespace SineVita.Muguet.Nelumbo.IntervalClass {
             }
             return false;
         }
+        
+        // * ToString
+        public override string ToString() => $"{Prefix} {Suffix}";
+        public override int GetHashCode() => HashCode.Combine((int)Prefix, (int)Suffix) * 103;
 
         // * Relational Manipulation 
         public FunctionalIntervalClass Inverted { get {

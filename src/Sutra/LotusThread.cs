@@ -53,7 +53,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
             var movementStr = $"{Movement.ToLsfe()} ";
             return string.Concat(
                 movementStr,
-                String.Join(" ", strands.Select(s => $"({s.AntecedentRole}->{s.ConsequentRole})"))
+                String.Join(" ", strands.Select(s => $"({LsfeHelper.ToString(s.AntecedentRole)}->{LsfeHelper.ToString(s.ConsequentRole)})"))
             );
         }
     }

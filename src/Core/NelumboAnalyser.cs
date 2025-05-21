@@ -18,9 +18,14 @@ namespace SineVita.Muguet.Nelumbo
         
         // * Sutra
         private LanternSutra _sutra;
+        public LanternSutra Sutra => _sutra;
 
         public void AppendLantern(IReadOnlyChord chord) {
             _sutra.AppendLantern(chord);
         }
+        
+        public IReadOnlyList<LanternThread> GetSutraConsecutiveThreads() => _sutra.GetConsecutiveThreads();
+        public Lonicera<Lantern, LanternThread> GetAllSutraLonicera() => _sutra.GetLonicera();
+        public IReadOnlyList<LanternThread> GetAllThreads(bool onlyConsecutive) => _sutra.GetAllThreads(onlyConsecutive);
     }
 }

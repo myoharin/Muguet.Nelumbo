@@ -16,7 +16,7 @@ namespace SineVita.Muguet.Nelumbo.Context {
         }
         
         // * Interval Evaluations
-        private Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> _intervalEvaluation { get; set; }
+        private Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> _intervalEvaluation;
 
         public void UpdateEvaluation(FormalIntervalClassification intervalClass, Func<IReadOnlyPitchInterval, bool> func) {
             if (!_intervalEvaluation.TryAdd(intervalClass, func)) {
@@ -59,10 +59,10 @@ namespace SineVita.Muguet.Nelumbo.Context {
                 };
             }
         }
-        
+
+        // => this[value](interval);
         public bool Evaluate(IReadOnlyPitchInterval interval, GenericLocalMovement value) => this[value](interval);
-        public bool Evaluate(IReadOnlyPitchInterval interval, FormalIntervalClassification intervalClass) => this[intervalClass](interval);
-        
+        public bool Evaluate(IReadOnlyPitchInterval interval, FormalIntervalClassification value) => this[value](interval);
         // * ISutraContextualizer
         public SutraContext Context => this;
     }

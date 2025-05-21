@@ -207,6 +207,8 @@ namespace SineVita.Muguet.Nelumbo.IntervalClass {
         public static FunctionalIntervalClass AM7 => Ultramajor7th;
         public static FunctionalIntervalClass UM7 => Ultramajor7th;
         
-    
+        // * ToString
+        public abstract override string ToString();
+        public abstract override int GetHashCode();
     }
 }

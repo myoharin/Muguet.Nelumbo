@@ -1,4 +1,6 @@
-﻿namespace SineVita.Muguet.Nelumbo.Internal.UnitTest
+﻿using SineVita.Muguet.Nelumbo.Lsfe;
+
+namespace SineVita.Muguet.Nelumbo.Internal.UnitTest
 {
     internal class ChordProgressionTest
     {
@@ -29,6 +31,20 @@
             NelumboAnalyser analyser = new NelumboAnalyser();
             analyser.AppendLantern(chord1);
             analyser.AppendLantern(chord2);
+            
+            var lantern1 = analyser.Sutra.Lanterns[0];
+            foreach (var lotus in lantern1.Lotuses) {
+                Console.WriteLine($"\n= = {lotus.Pitch.NoteName} = =");
+                foreach (var role in lotus.Roles) {
+                    Console.Write(" | ");
+                    Console.Write(LsfeHelper.ToString(role));
+                }
+            }
+            
+            var threads = analyser.GetAllThreads(false);
+            foreach (var thread in threads) {
+                Console.WriteLine(thread.ToLsfe());
+            }
         }
     }
 }

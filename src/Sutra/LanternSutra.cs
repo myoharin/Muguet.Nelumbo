@@ -14,6 +14,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         
         // * Sutra
         private List<Lantern> _lanterns;
+        public IReadOnlyList<Lantern> Lanterns => _lanterns;
         public LanternThread GetThread(int index1, int index2) {
             return new LanternThread(_lanterns[index1], _lanterns[index2]);
         }

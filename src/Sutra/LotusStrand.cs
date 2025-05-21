@@ -21,7 +21,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         }
         
         // * Methods
-        public string ToLsfe() => $"{AntecedentRole} {Movement} {ConsequentRole}";
+        public string ToLsfe() => $"{LsfeHelper.ToString(AntecedentRole)} {Movement} {LsfeHelper.ToString(ConsequentRole)}";
         public override string ToString() => ToLsfe();
     }
 }
