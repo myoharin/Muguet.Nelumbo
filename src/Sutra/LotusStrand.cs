@@ -1,5 +1,8 @@
-namespace SineVita.Muguet.Nelumbo {
-    public class LotusStrand {
+using SineVita.Muguet.Nelumbo.Lily;
+using SineVita.Muguet.Nelumbo.Lsfe;
+
+namespace SineVita.Muguet.Nelumbo.Sutra {
+    public class LotusStrand : ILsfeParsable<LotusStrand> {
         // * References
         public LotusThread Thread { init; get; }
         public Lotus Antecedent => Thread.Antecedent;
@@ -18,6 +21,7 @@ namespace SineVita.Muguet.Nelumbo {
         }
         
         // * Methods
-        public override string ToString() => $"{AntecedentRole} {Movement} {ConsequentRole}";
+        public string ToLsfe() => $"{AntecedentRole} {Movement} {ConsequentRole}";
+        public override string ToString() => ToLsfe();
     }
 }

@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.Sutra {
     public enum GenericLocalMovement {
         NA = -1,
         

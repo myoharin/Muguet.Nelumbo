@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.Lily {
     public enum LotusRole {
         ST = 0,
         S1 = 0,

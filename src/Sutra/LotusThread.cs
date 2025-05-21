@@ -1,7 +1,10 @@
-using SineVita.Muguet;
+using SineVita.Muguet.Nelumbo.Context;
+using SineVita.Muguet.Nelumbo.Lsfe;
+using SineVita.Muguet.Nelumbo.Lily;
 
-namespace SineVita.Muguet.Nelumbo {
+namespace SineVita.Muguet.Nelumbo.Sutra {
     public class LotusThread
+        : ILsfeParsable<LotusThread>, ISutraContextualizer
     {
         // * References
         public Lotus Antecedent { init; get; }
@@ -35,6 +38,23 @@ namespace SineVita.Muguet.Nelumbo {
             return this.Movement.Equals(movement) &&
                    Consequent.HasRole(conseuqentRole) &&
                    Antecedent.HasRole(antecedantRole);
+        }
+        
+        // * Lsfe
+        public string ToLsfe() => ToLsfeTupletForm();
+        public string ToLsfeCnfForm() {
+            // [LotusStrand] (&& [LotusStrand])*
+            var strands = EnumerateStrands();
+            return string.Join(" && ", strands.Select(strand => strand.ToLsfe()));
+        }
+        public string ToLsfeTupletForm() {
+            // [Movement] (\([Antecedent LotusRole] -> [Consequent LotusRole]\))+
+            var strands = EnumerateStrands();
+            var movementStr = $"{Movement.ToLsfe()} ";
+            return string.Concat(
+                movementStr,
+                String.Join(" ", strands.Select(s => $"({s.AntecedentRole}->{s.ConsequentRole})"))
+            );
         }
     }
 }

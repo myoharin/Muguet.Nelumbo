@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo
+namespace SineVita.Muguet.Nelumbo.Lily
 {
     public class LotusDyad
     {
@@ -14,15 +14,7 @@ namespace SineVita.Muguet.Nelumbo
         private PitchInterval _interval { init; get; }
         public IReadOnlyPitchInterval Interval => _interval;
 
-        public IReadOnlyPitchInterval ReducedInterval {
-            get {
-                var interval = (PitchInterval)_interval.Clone();
-                while (interval > PitchInterval.Octave) {
-                    interval.Decrement(PitchInterval.Octave);
-                }
-                return interval;
-            }
-        }
+        public IReadOnlyPitchInterval ReducedInterval => _interval % PitchInterval.Octave;
 
         // * Derived Gets
         public Lotus Bottom => Root;

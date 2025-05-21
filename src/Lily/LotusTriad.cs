@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo
+namespace SineVita.Muguet.Nelumbo.Lily
 {
     public class LotusTriad // may be a redundant class
     {

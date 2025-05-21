@@ -1,5 +1,7 @@
-namespace SineVita.Muguet.Nelumbo {
-    public enum CMMovementIdenity {
+namespace SineVita.Muguet.Nelumbo.MovementIdentity
+{
+    public enum CmMovementIdentity
+    {
         mDm3m,
         mDM3m,
         mUm3m,
@@ -16,5 +18,5 @@ namespace SineVita.Muguet.Nelumbo {
         MDM3M,
         MUm3M,
         MUM3M
-    } // ! COULD BE REDUNDANT
+    }
 }

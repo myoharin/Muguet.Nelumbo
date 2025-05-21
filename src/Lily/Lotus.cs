@@ -1,10 +1,10 @@
 using SineVita.Muguet;
+using SineVita.Muguet.Nelumbo.Context;
 
-namespace SineVita.Muguet.Nelumbo {
-    public class Lotus {
+namespace SineVita.Muguet.Nelumbo.Lily {
+    public class Lotus : ISutraContextualizer {
         // * Object References
-        public Lantern Lantern { init; get; }
-        public SutraContext Context => Lantern.Context;
+        public SutraContext Context { init; get; }
         public Pitch Pitch { init; get; }
 
         // * Variables
@@ -12,9 +12,9 @@ namespace SineVita.Muguet.Nelumbo {
         public IReadOnlyList<LotusRole> Roles => _roles.AsReadOnly();
 
         // * Constructor
-        public Lotus(Pitch pitch, Lantern originLantern) {
-            Pitch = pitch;
-            Lantern = originLantern;
+        public Lotus(ISutraContextualizer contextualizer, IReadOnlyPitch pitch) {
+            Pitch = pitch.ToPitch();
+            Context = contextualizer.Context;
             _roles = new();
         }
 

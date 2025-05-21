@@ -1,8 +1,10 @@
-namespace SineVita.Muguet.Nelumbo {
+using SineVita.Muguet.Nelumbo.Lily;
+
+namespace SineVita.Muguet.Nelumbo.Sutra {
     public class LanternThread {
         // * Lantern References
-        public required Lantern Antecedent { init; get; }
-        public required Lantern Consequent { init; get; }
+        public Lantern Antecedent { init; get; }
+        public Lantern Consequent { init; get; }
         
         // * Properties
         public List<LotusThread> _threads;

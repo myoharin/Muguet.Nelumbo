@@ -1,13 +1,12 @@
 using Caprifolium;
-using System.Collections.Generic;
+using SineVita.Muguet.Nelumbo.Context;
 using SineVita.Muguet.Nelumbo.IntervalClass;
 
-namespace SineVita.Muguet.Nelumbo {
-    public class Lantern {
+namespace SineVita.Muguet.Nelumbo.Lily {
+    public class Lantern : ISutraContextualizer {
         // * Object References
-        public LanternSutra Sutra { init; get; }
-        public SutraContext Context => Sutra.Context;
- 
+        public SutraContext Context { init; get; }
+
         // * Core Variable Management
         private Chord _chord;
         public IReadOnlyChord Chord => _chord.Clone();
@@ -17,18 +16,18 @@ namespace SineVita.Muguet.Nelumbo {
         public int Count => Lotuses.Count;
 
         // * Constructor
-        public Lantern(LanternSutra sutra, Chord chord) {
-            this.Sutra = sutra;
+        public Lantern(ISutraContextualizer contextualizer, IReadOnlyChord chord) {
+            Context = contextualizer.Context;
             Lotuses = new();
             _chord = new();
             SetChord(chord);
         }
 
         // * Chord
-        public void SetChord(Chord chord) {
-            _chord = chord;
-            foreach (var pitch in chord.Notes) {
-                Lotuses.Add(new Lotus(pitch, this));
+        public void SetChord(IReadOnlyChord readOnlyChord) {
+            _chord = readOnlyChord.ToChord();
+            foreach (var pitch in _chord.Notes) {
+                Lotuses.Add(new Lotus(this, pitch));
             }
             AssignLotusRoles();
         }
@@ -129,14 +128,17 @@ namespace SineVita.Muguet.Nelumbo {
                     } // [A C] G
                 }
                 
-                // * Limmatic Suspended Mediants - only look at tonic
-                    // Lsus2
-                    // Root ST: C G C# / C C# G / G C C# - DONE
-                    // Terminal ST: C# G C / C# C G / G C# C - Inverted Limma
+                    /*
+                    Limmatic Suspended Mediants - only look at tonic
+                    Lsus2
+                    Root ST: C G C# / C C# G / G C C# - DONE
+                    Terminal ST: C# G C / C# C G / G C# C - Inverted Limma
                     
-                    // Lsus4
-                    // Root SD: C G F# / G C F# / G F# C - Inverted Limma
-                    // Terminal SD F# C G / F# G C / C F# G - DONE
+                    Lsus4
+                    Root SD: C G F# / G C F# / G F# C - Inverted Limma
+                    Terminal SD F# C G / F# G C / C F# G - DONE
+                    */
+                    
                 if (Context.Evaluate(PitchInterval.Abs(reducedInterval.Decremented(PitchInterval.Octave)),
                         FormalIntervalClassification.Limma)) { // check if interval is inverted Limma
                     if (root.HasRole(LotusRole.SD)) terminal.AddRole(LotusRole.Lsus4);

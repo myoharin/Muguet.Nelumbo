@@ -1,15 +1,26 @@
-﻿using SineVita.Muguet.Nelumbo.Internal;
+﻿using SineVita.Muguet.Nelumbo.Context;
+using SineVita.Muguet.Nelumbo.Lily;
+using SineVita.Muguet.Nelumbo.Sutra;
+using Caprifolium;
 
 namespace SineVita.Muguet.Nelumbo
 {
-    public class NelumboAnalyser
-    {
+    public class NelumboAnalyser : ISutraContextualizer
+    {   
+        // * Context
         public SutraContext Context { init; get; }
+        
+        // * Constructor
+        public NelumboAnalyser(ISutraContextualizer? contextualizer = null) {
+            Context = contextualizer != null ? contextualizer.Context : new SutraContext();
+            _sutra = new(this);
+        }
+        
+        // * Sutra
         private LanternSutra _sutra;
 
-        public NelumboAnalyser(SutraContext? context = null) {
-            Context = context ?? new();
-            _sutra = new(this);
+        public void AppendLantern(IReadOnlyChord chord) {
+            _sutra.AppendLantern(chord);
         }
     }
 }
