@@ -5,6 +5,8 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
 {
     public class LotusThreadPattern :
         ILsfePatternReplicator<LotusThread>,
+        ILsfePatternContainer<LotusThread>,
+        ILsfePatternFitter<LotusThread>,
         ILsfePatternFitter<LanternThread>,
         ILsfePatternContainer<LotusStrand>,
         ILsfePattern<ThreadMovement>
@@ -60,6 +62,18 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         }
         public bool MatchesExact(ILsfeParsable<ThreadMovement> movement) => _movementPattern.MatchesExact(movement);
 
+        public bool MatchesIn(ILsfeParsable<LotusThread> thread) {
+            var threadObj = thread.Get();
+            return _movementPattern.MatchesExact(threadObj.Movement)
+                && _antecedantRoles.All(threadObj.Antecedant.Roles.Contains)
+                && _consequentRoles.All(threadObj.Consequent.Roles.Contains);
+        }
+        public bool MatchContains(ILsfeParsable<LotusThread> thread) {
+            var threadObj = thread.Get();
+            return _movementPattern.MatchesExact(threadObj.Movement)
+                   && threadObj.Antecedant.Roles.All(_antecedantRoles.Contains)
+                   && threadObj.Consequent.Roles.All(_consequentRoles.Contains);
+        }
         public bool MatchContains(ILsfeParsable<LotusStrand> strand) {
             var strandObj = strand.Get();
             return _movementPattern.MatchesExact(strandObj.Movement)

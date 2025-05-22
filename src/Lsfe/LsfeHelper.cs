@@ -1,7 +1,7 @@
 using SineVita.Muguet.Nelumbo.Lily;
 
 namespace SineVita.Muguet.Nelumbo.Lsfe {
-    public class LsfeHelper {
+    internal class LsfeHelper {
         public static String ToString(LotusRole role) {
             return role switch {
                 LotusRole.ST       => "ST",
@@ -14,6 +14,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe {
                 LotusRole.Lsus2    => "Lsus2",
                 LotusRole.Lsus4    => "Lsus4",
                 LotusRole.susM     => "susM",
+                
                 LotusRole.Ssm3     => "Ssm3",
                 LotusRole.Sdm3     => "Sdm3",
                 LotusRole.SSM3     => "SSM3",
