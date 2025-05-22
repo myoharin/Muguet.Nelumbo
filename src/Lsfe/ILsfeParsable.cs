@@ -3,5 +3,6 @@
     public interface ILsfeParsable<T>
     {
         public String ToLsfe();
+        public T Get();
     }
 }

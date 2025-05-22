@@ -7,16 +7,16 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         : ILsfeParsable<LotusThread>, ISutraContextualizer
     {
         // * References
-        public Lotus Antecedent { init; get; }
+        public Lotus Antecedant { init; get; }
         public Lotus Consequent { init; get; }
-        public SutraContext Context => Antecedent.Context;
+        public SutraContext Context => Antecedant.Context;
         
         // * Properties
         public ThreadMovement Movement { init; get; }
         
         // * Constructor
-        public LotusThread(Lotus antecedent, Lotus consequent) {
-            Antecedent = antecedent;
+        public LotusThread(Lotus antecedant, Lotus consequent) {
+            Antecedant = antecedant;
             Consequent = consequent;
             Movement = new(this);
         }
@@ -24,7 +24,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         // * Enumerate Strands
         public List<LotusStrand> EnumerateStrands() {
             var strands = new List<LotusStrand>();
-            foreach (var antecedentRole in Antecedent.Roles) {
+            foreach (var antecedentRole in Antecedant.Roles) {
                 foreach (var consequentRole in Consequent.Roles) {
                     strands.Add(new LotusStrand(this, antecedentRole, consequentRole));
                 }
@@ -33,14 +33,18 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         }
         
         // * Has Strand
-        public bool HasStrand(LotusRole conseuqentRole, ThreadMovement movement, LotusRole antecedantRole) => HasStrand(conseuqentRole, antecedantRole, movement);
-        public bool HasStrand(LotusRole conseuqentRole, LotusRole antecedantRole, ThreadMovement movement) {
-            return this.Movement.Equals(movement) &&
-                   Consequent.HasRole(conseuqentRole) &&
-                   Antecedent.HasRole(antecedantRole);
+        public bool HasStrand(LotusRole antecedantRole, ThreadMovement movement, LotusRole conseuqentRole) => HasStrand(conseuqentRole, antecedantRole, movement);
+        public bool HasStrand(ThreadMovement movement, LotusRole antecedantRole, LotusRole conseuqentRole) => HasStrand(conseuqentRole, antecedantRole, movement);
+        public bool HasStrand(LotusRole antecedantRole, LotusRole conseuqentRole, ThreadMovement movement) {
+            return this.Movement.Equals(movement) && HasStrand(antecedantRole, conseuqentRole);
+        }
+        public bool HasStrand(LotusRole antecedantRole, LotusRole conseuqentRole) {
+            return Consequent.HasRole(conseuqentRole) &&
+                   Antecedant.HasRole(antecedantRole);
         }
         
         // * Lsfe
+        LotusThread ILsfeParsable<LotusThread>.Get() => this;
         public string ToLsfe() => ToLsfeTupletForm();
         public string ToLsfeCnfForm() {
             // [LotusStrand] (&& [LotusStrand])*
@@ -53,7 +57,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
             var movementStr = $"{Movement.ToLsfe()} ";
             return string.Concat(
                 movementStr,
-                String.Join(" ", strands.Select(s => $"({LsfeHelper.ToString(s.AntecedentRole)}->{LsfeHelper.ToString(s.ConsequentRole)})"))
+                String.Join(" ", strands.Select(s => $"({LsfeHelper.ToString(s.AntecedantRole)}->{LsfeHelper.ToString(s.ConsequentRole)})"))
             );
         }
     }

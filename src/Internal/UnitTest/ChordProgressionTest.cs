@@ -41,6 +41,16 @@ namespace SineVita.Muguet.Nelumbo.Internal.UnitTest
                 }
             }
             
+            var lantern2 = analyser.Sutra.Lanterns[1];
+            foreach (var lotus in lantern2.Lotuses) {
+                Console.WriteLine($"\n= = {lotus.Pitch.NoteName} = =");
+                foreach (var role in lotus.Roles) {
+                    Console.Write(" | ");
+                    Console.Write(LsfeHelper.ToString(role));
+                }
+            }
+            
+            Console.WriteLine("\n\n");
             var threads = analyser.GetAllThreads(false);
             foreach (var thread in threads) {
                 Console.WriteLine(thread.ToLsfe());

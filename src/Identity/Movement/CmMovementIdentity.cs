@@ -1,4 +1,4 @@
-namespace SineVita.Muguet.Nelumbo.MovementIdentity
+namespace SineVita.Muguet.Nelumbo.Identity.Movement
 {
     public enum CmMovementIdentity
     {

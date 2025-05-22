@@ -40,9 +40,12 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         }
 
         public IReadOnlyList<LotusThread> GetLotusThreads(bool glmOnly) {
-            var returnList = (new List<LotusThread>(_threads));
-            if (glmOnly) returnList.RemoveAll(t => !t.Movement.IsGenericLocalMovement);
-            return returnList;
+            if (glmOnly) {
+                var returnList = (new List<LotusThread>(_threads));
+                returnList.RemoveAll(t => !t.Movement.IsGenericLocalMovement);
+                return returnList;
+            }
+            return Threads;
         }
         
         // * Generator
@@ -56,6 +59,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         }
         
         // * LSFE
+        LanternThread ILsfeParsable<LanternThread>.Get() => this;
         public string ToLsfe() => ToLsfe(true);
         public string ToLsfe(bool glmOnly) { // tuplet form
             var threads = GetLotusThreads(glmOnly);
@@ -70,7 +74,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
                 else {
                     returnStr += "\n\n";
                 }
-                var threadString = $"{thread.Antecedent.Pitch.NoteName}" +
+                var threadString = $"{thread.Antecedant.Pitch.NoteName}" +
                                    $"->" +
                                    $"{thread.Consequent.Pitch.NoteName}";
                 var lotusThreadTupletString = thread.ToLsfeTupletForm();//.Replace(" ", "\n");

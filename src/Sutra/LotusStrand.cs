@@ -5,23 +5,24 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
     public class LotusStrand : ILsfeParsable<LotusStrand> {
         // * References
         public LotusThread Thread { init; get; }
-        public Lotus Antecedent => Thread.Antecedent;
+        public Lotus Antecedent => Thread.Antecedant;
         public Lotus Consequent => Thread.Consequent;
         public ThreadMovement Movement => Thread.Movement;
         
         // * Core
-        public LotusRole AntecedentRole { init; get; }
+        public LotusRole AntecedantRole { init; get; }
         public LotusRole ConsequentRole { init; get; }
 
         // * Constructor 
         public LotusStrand(LotusThread thread, LotusRole antecedantRole, LotusRole consequentRole) {
             Thread = thread;
-            AntecedentRole = antecedantRole;
+            AntecedantRole = antecedantRole;
             ConsequentRole = consequentRole;
         }
         
-        // * Methods
-        public string ToLsfe() => $"{LsfeHelper.ToString(AntecedentRole)} {Movement} {LsfeHelper.ToString(ConsequentRole)}";
+        // * Lsfe
+        LotusStrand ILsfeParsable<LotusStrand>.Get() => this;
+        public string ToLsfe() => $"{LsfeHelper.ToString(AntecedantRole)} {Movement} {LsfeHelper.ToString(ConsequentRole)}";
         public override string ToString() => ToLsfe();
     }
 }

@@ -19,6 +19,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe {
                 LotusRole.SSM3     => "SSM3",
                 LotusRole.SAM3     => "SAM3",
                 LotusRole.Sneu3 => "Sneu3",
+                _ => ""
 
             };
         }

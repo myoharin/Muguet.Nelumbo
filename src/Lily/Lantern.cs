@@ -39,7 +39,7 @@ namespace SineVita.Muguet.Nelumbo.Lily {
             // * Initialize Lonicera
             dyads.AddRange(Lotuses, true);
             
-            // * First Pass
+            // * 1st Pass
             foreach (var dyad in dyads.Links) {
                 var reducedInterval = dyad.ReducedInterval;
                 // Structural
@@ -67,7 +67,8 @@ namespace SineVita.Muguet.Nelumbo.Lily {
                     dyad.Terminal.AddRole(LotusRole.StressAugmented);
                 }
             }
-            // * Second Pass - Lotus
+            
+            // * 2nd Pass - Monad
             foreach (var lotus in Lotuses) {
                 // Suspended Mediants
                 if (lotus.HasRole(LotusRole.SD) && lotus.HasRole(LotusRole.ST)) {
@@ -75,7 +76,7 @@ namespace SineVita.Muguet.Nelumbo.Lily {
                 }
             }
             
-            // * Third Pass - Dyads
+            // * 3rd Pass - Dyad
             foreach (var dyad in dyads.Links) {
                 var reducedInterval = dyad.ReducedInterval;
                 var root = dyad.Root;
