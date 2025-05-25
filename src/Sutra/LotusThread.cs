@@ -22,25 +22,29 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         }
         
         // * Enumerate Strands
-        public List<LotusStrand> EnumerateStrands() {
+        public List<LotusStrand> EnumerateStrands(double? weightThreshold = null) {
             var strands = new List<LotusStrand>();
+            var threshold = weightThreshold ?? Context.StrandWeightThreshold;
             foreach (var antecedentRole in Antecedant.Roles) {
                 foreach (var consequentRole in Consequent.Roles) {
-                    strands.Add(new LotusStrand(this, antecedentRole, consequentRole));
+                    var strand = new LotusStrand(this, antecedentRole, consequentRole);
+                    if (strand.Weight >= threshold) strands.Add(strand);
                 }
             }
             return strands;
         }
         
         // * Has Strand
-        public bool HasStrand(LotusRole antecedantRole, ThreadMovement movement, LotusRole conseuqentRole) => HasStrand(conseuqentRole, antecedantRole, movement);
-        public bool HasStrand(ThreadMovement movement, LotusRole antecedantRole, LotusRole conseuqentRole) => HasStrand(conseuqentRole, antecedantRole, movement);
-        public bool HasStrand(LotusRole antecedantRole, LotusRole conseuqentRole, ThreadMovement movement) {
-            return this.Movement.Equals(movement) && HasStrand(antecedantRole, conseuqentRole);
+        public bool HasStrand(LotusRole antecedentRole, ThreadMovement movement, LotusRole consequentRole, double? weightThreshold = null) => HasStrand(consequentRole, antecedentRole, movement, weightThreshold);
+        public bool HasStrand(ThreadMovement movement, LotusRole antecedentRole, LotusRole consequentRole, double? weightThreshold = null) => HasStrand(consequentRole, antecedentRole, movement, weightThreshold);
+        public bool HasStrand(LotusRole antecedentRole, LotusRole consequentRole, ThreadMovement movement, double? weightThreshold = null) {
+            return this.Movement.Equals(movement) && HasStrand(antecedentRole, consequentRole, weightThreshold);
         }
-        public bool HasStrand(LotusRole antecedantRole, LotusRole conseuqentRole) {
-            return Consequent.HasRole(conseuqentRole) &&
-                   Antecedant.HasRole(antecedantRole);
+        public bool HasStrand(LotusRole antecedentRole, LotusRole consequentRole, double? weightThreshold = null) {
+            return Consequent.HasRole(consequentRole) &&
+                   Antecedant.HasRole(antecedentRole) &&
+                   (new LotusStrand(this, antecedentRole, consequentRole)).Weight >=
+                   (weightThreshold ?? Context.StrandWeightThreshold);
         }
         
         // * Lsfe
@@ -57,7 +61,7 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
             var movementStr = $"{Movement.ToLsfe()} ";
             return string.Concat(
                 movementStr,
-                String.Join(" ", strands.Select(s => $"({LsfeHelper.ToString(s.AntecedantRole)}->{LsfeHelper.ToString(s.ConsequentRole)})"))
+                String.Join(" ", strands.Select(s => $"({LsfeHelper.ToShortString(s.AntecedantRole)}->{LsfeHelper.ToShortString(s.ConsequentRole)})"))
             );
         }
     }

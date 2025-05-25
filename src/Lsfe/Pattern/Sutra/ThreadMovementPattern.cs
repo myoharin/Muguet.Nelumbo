@@ -27,6 +27,10 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
             : this() {
             SetInterval(interval, contextualizer);
         }
+        public ThreadMovementPattern(GenericLocalMovement movement) {
+            _interval = PitchInterval.Empty;
+            SetInterval(movement);
+        }
         
         public void SetInterval(PitchInterval interval, GenericLocalMovement movement) {
             _interval = interval;
@@ -42,6 +46,22 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
                     break;
                 }
             }
+        }
+        public void SetInterval(GenericLocalMovement movement) {
+            _movement = movement;
+            _interval = movement switch {
+                GenericLocalMovement.NA => PitchInterval.Empty,
+                GenericLocalMovement.D8 => PitchInterval.Octave.Inverted(),
+                GenericLocalMovement.D5 => PitchInterval.Perfect5th.Inverted(),
+                GenericLocalMovement.D4 => PitchInterval.Perfect4th.Inverted(),
+                GenericLocalMovement.DL => new MidiPitchInterval(-1),
+                GenericLocalMovement.U  => PitchInterval.Unison,
+                GenericLocalMovement.UL => new MidiPitchInterval(1),
+                GenericLocalMovement.U4 => PitchInterval.Perfect4th,
+                GenericLocalMovement.U5 => PitchInterval.Perfect5th,
+                GenericLocalMovement.U8 => PitchInterval.Octave,
+                _                       => PitchInterval.Empty,
+            };
         }
         
         // * ILsfePattern

@@ -12,17 +12,22 @@ namespace SineVita.Muguet.Nelumbo.Sutra {
         // * Core
         public LotusRole AntecedantRole { init; get; }
         public LotusRole ConsequentRole { init; get; }
+        public double Weight { init; get; }
 
         // * Constructor 
         public LotusStrand(LotusThread thread, LotusRole antecedantRole, LotusRole consequentRole) {
             Thread = thread;
             AntecedantRole = antecedantRole;
             ConsequentRole = consequentRole;
+            Weight = Thread.Context.CalculateStrandWeight(
+                Antecedent.RoleWeight(AntecedantRole),
+                Consequent.RoleWeight(ConsequentRole)
+            );
         }
         
         // * Lsfe
         LotusStrand ILsfeParsable<LotusStrand>.Get() => this;
-        public string ToLsfe() => $"{LsfeHelper.ToString(AntecedantRole)} {Movement} {LsfeHelper.ToString(ConsequentRole)}";
+        public string ToLsfe() => $"{LsfeHelper.ToShortString(AntecedantRole)} {Movement} {LsfeHelper.ToShortString(ConsequentRole)}";
         public override string ToString() => ToLsfe();
     }
 }

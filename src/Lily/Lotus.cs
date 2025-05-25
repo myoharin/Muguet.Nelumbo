@@ -8,30 +8,42 @@ namespace SineVita.Muguet.Nelumbo.Lily {
         public Pitch Pitch { init; get; }
 
         // * Variables
-        private List<LotusRole> _roles;
-        public IReadOnlyList<LotusRole> Roles => _roles.AsReadOnly();
+        private Dictionary<LotusRole, double> _roleWeights;
+        
+        public IReadOnlyList<LotusRole> Roles {
+            get {
+                var list = _roleWeights.Keys
+                    .Where(x => this[x] >= Context.RoleWeightThreshold)
+                    .ToList();
+                list.Sort((x, y) => x.CompareTo(y));
+                return list.AsReadOnly();
+            }
+        }
+
+        public double this[LotusRole role] => _roleWeights.TryGetValue(role, out var weight) ? weight : 0;
 
         // * Constructor
         public Lotus(ISutraContextualizer contextualizer, IReadOnlyPitch pitch) {
             Pitch = pitch.ToPitch();
             Context = contextualizer.Context;
-            _roles = new();
+            _roleWeights = new();
         }
 
         // * LotusRoles Management
-        public bool HasRole(LotusRole role) => _roles.Contains(role);
-        public void AddRole(LotusRole role) {
-            if (HasRole(role)) return;
-            for (int i = 0; i < _roles.Count; ++i) {
-                if (_roles[i] > role) {
-                    _roles.Insert(i,role);
-                    return;
-                }
+        public bool HasRole(LotusRole role) => _roleWeights.ContainsKey(role);
+        public double RoleWeight(LotusRole role) => _roleWeights[role];
+        public bool RemoveRole(LotusRole role) => _roleWeights.Remove(role);
+        public void ResetRoles() => _roleWeights.Clear();
+        
+        public void AddRole(LotusRole role, double weight) {
+            if (HasRole(role)) {
+                _roleWeights[role] += weight;
             }
-            _roles.Add(role);
+            else {
+                _roleWeights.Add(role, weight);
+            }
+            
         }
-        public bool RemoveRole(LotusRole role) => _roles.Remove(role);
-        public void ResetRoles() => _roles.Clear();
     }
 
 }

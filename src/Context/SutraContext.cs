@@ -1,4 +1,5 @@
 using SineVita.Muguet.Nelumbo.IntervalClass;
+using SineVita.Muguet.Nelumbo.Lily;
 using SineVita.Muguet.Nelumbo.Sutra;
 
 namespace SineVita.Muguet.Nelumbo.Context {
@@ -7,16 +8,33 @@ namespace SineVita.Muguet.Nelumbo.Context {
     {
         // * Constructor
         public SutraContext(Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>>? evaluationOverrides = null) {
-            _intervalEvaluation = DefaultInternalEvaluation;
+            _intervalEvaluation = DefaultIntervalClassEvaluation;
             if (evaluationOverrides != null) {
                 foreach (var key in evaluationOverrides.Keys) {
                     _intervalEvaluation[key] = evaluationOverrides[key];
                 }
             }
+
+            _assignLotusRoles = DefaultAssignLotusRoles; // default
+            RoleWeightThreshold = 0.5; // default
+            _calculateStrandWeight = DefaultCalculateStrandWeight;
+            StrandWeightThreshold = 0.6; // default
         }
         
-        // * Interval Evaluations
+        // * Properties
         private Dictionary<FormalIntervalClassification, Func<IReadOnlyPitchInterval, bool>> _intervalEvaluation;
+        private Func<List<Lotus>, ISutraContextualizer, bool> _assignLotusRoles;
+        private Func<double, double, double> _calculateStrandWeight;
+        
+        public double RoleWeightThreshold { get; set; }
+        public double StrandWeightThreshold { get; set; }
+
+        // * Applying Functions
+        public bool AssignLotusRoles(List<Lotus> lotuses) => _assignLotusRoles(lotuses, this);
+
+        public double CalculateStrandWeight(double antecedantWeight, double consequentWeight) => _calculateStrandWeight(antecedantWeight, consequentWeight);
+        // * Interval Evaluations
+        
 
         public void UpdateEvaluation(FormalIntervalClassification intervalClass, Func<IReadOnlyPitchInterval, bool> func) {
             if (!_intervalEvaluation.TryAdd(intervalClass, func)) {
@@ -60,9 +78,9 @@ namespace SineVita.Muguet.Nelumbo.Context {
             }
         }
 
-        // => this[value](interval);
         public bool Evaluate(IReadOnlyPitchInterval interval, GenericLocalMovement value) => this[value](interval);
         public bool Evaluate(IReadOnlyPitchInterval interval, FormalIntervalClassification value) => this[value](interval);
+        
         // * ISutraContextualizer
         public SutraContext Context => this;
     }
