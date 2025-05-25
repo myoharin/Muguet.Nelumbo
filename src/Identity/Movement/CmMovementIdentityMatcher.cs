@@ -20,7 +20,7 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
         
         // * Internal Data
         private static readonly Dictionary<CmMovementIdentityEnum, CmMovementIdentityCollumn> Evaluations;
-        private static readonly List<CmMovementIdentityRow> EvaluationRow;
+        private static readonly List<CmMovementIdentityRow> EvaluationRows;
 
         static CmMovementIdentityMatcher() {
             var evaluationRowsAsTable = new List<Tuple<int, GenericLocalMovement, LotusRole, LotusRole, bool, bool>>()
@@ -55,9 +55,9 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
                 new(27, GenericLocalMovement.U5, LotusRole.SM3, LotusRole.SD, true, false),
             };
 
-            EvaluationRow = new();
+            EvaluationRows = new();
             foreach (var row in evaluationRowsAsTable) {
-                EvaluationRow.Add(new CmMovementIdentityRow(
+                EvaluationRows.Add(new CmMovementIdentityRow(
                     row.Item2, // GLM
                     row.Item3, // antecedentRole
                     row.Item4,  // consequentRole
@@ -67,7 +67,7 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
                 );
             }
 
-            var e = EvaluationRow;
+            var e = EvaluationRows;
             
             Evaluations = new() {
                 { CmMovementIdentityEnum.mDm3m, new CmMovementIdentityCollumn(new() {
@@ -138,13 +138,37 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
             Rows = rows;
         }
 
-        public bool MatchesExact(ILsfeParsable<LotusThread> thread) {
-            throw new NotImplementedException();
+        public bool MatchesExact(ILsfeParsable<LotusThread> thread) { // KEY
+            var threadObj = thread.Get();
+            var definedAntecedent = false;
+            var definedConsequent = false;
+            foreach (var row in Rows) {
+                if (
+                    threadObj.Antecedant.Roles.Contains(row.AntecedentRole)
+                    && threadObj.Consequent.Roles.Contains(row.ConsequentRole)
+                    && row.ThreadPattern.MatchContains(threadObj.Movement)
+                ) {
+                    definedAntecedent = definedAntecedent || row.DefinedAntecedent;
+                    definedConsequent = definedConsequent || row.DefinedConsequent;
+                }
+
+                if (definedAntecedent && definedConsequent) return true;
+            }
+            return false;
         }
 
         public bool MatchesExact(ILsfeParsable<LotusStrand> strand) => false;
-        public bool MatchContains(ILsfeParsable<LotusStrand> strand) {
-            throw new NotImplementedException();
+        public bool MatchContains(ILsfeParsable<LotusStrand> strand) { // Test
+            var strandObj = strand.Get();
+            foreach (var row in Rows) {
+                if (
+                    strandObj.AntecedantRole == row.AntecedentRole
+                    && strandObj.ConsequentRole == row.ConsequentRole
+                    && row.ThreadPattern.MatchContains(strandObj.Movement)
+                ) return true;
+            }
+
+            return false;
         }
 
         public object Clone() => new CmMovementIdentityCollumn(new(Rows));
@@ -155,7 +179,9 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
     {
         public bool DefinedAntecedent;
         public bool DefinedConsequent;
-        public MultiThreadPattern ThreadPattern;
+        public GlmEquivalenceMultiThreadPattern ThreadPattern;
+        public LotusRole AntecedentRole;
+        public LotusRole ConsequentRole;
        
         public CmMovementIdentityRow(
             GenericLocalMovement glm,
@@ -165,19 +191,21 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
             bool definedConsequent
             ) 
         {
+            this.AntecedentRole = antecedentRole;
+            this.ConsequentRole = consequentRole;
             this.DefinedAntecedent = definedAntecedent;
             this.DefinedConsequent = definedConsequent;
             
-            ThreadPattern = new MultiThreadPattern(glm);
+            ThreadPattern = new GlmEquivalenceMultiThreadPattern(glm);
         }
     }
 
-    internal class MultiThreadPattern : ILsfePatternContainer<ThreadMovement>
+    internal class GlmEquivalenceMultiThreadPattern : ILsfePatternContainer<ThreadMovement>
     {
         public Tuple<ThreadMovementPattern, ThreadMovementPattern, ThreadMovementPattern> ThreadPatterns;
         
         public object Clone() {
-            return new MultiThreadPattern(ThreadPatterns.Item1.Movement);
+            return new GlmEquivalenceMultiThreadPattern(ThreadPatterns.Item1.Movement);
         }
         
         public bool MatchesExact(ILsfeParsable<ThreadMovement> t) => false;
@@ -187,7 +215,7 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement
                    ThreadPatterns.Item3.MatchesExact(t);
         }
 
-        public MultiThreadPattern(
+        public GlmEquivalenceMultiThreadPattern(
             GenericLocalMovement movement
         ) {
             this.ThreadPatterns = movement switch {
