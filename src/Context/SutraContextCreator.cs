@@ -109,23 +109,23 @@ namespace SineVita.Muguet.Nelumbo.Context
                 
                 // Structural Mediants - look at both SD & ST and add em up
                 if (rootIsTonic) {
-                    if (isMajor3) terminal.AddRole(LotusRole.SM3, (distanceWeight + root[LotusRole.ST])/2);
-                    if (isMinor3) terminal.AddRole(LotusRole.Sm3, (distanceWeight + root[LotusRole.ST])/2);
+                    if (isMajor3) terminal.AddRole(LotusRole.SM3, (distanceWeight * root[LotusRole.ST])/2);
+                    if (isMinor3) terminal.AddRole(LotusRole.Sm3, (distanceWeight * root[LotusRole.ST])/2);
                 }
 
                 if (terminalIsTonic) {
-                    if (isMinor6) root.AddRole(LotusRole.SM3, (distanceWeight + terminal[LotusRole.ST])/2);
-                    if (isMajor6) root.AddRole(LotusRole.Sm3, (distanceWeight + terminal[LotusRole.ST])/2);
+                    if (isMinor6) root.AddRole(LotusRole.SM3, (distanceWeight * terminal[LotusRole.ST])/2);
+                    if (isMajor6) root.AddRole(LotusRole.Sm3, (distanceWeight * terminal[LotusRole.ST])/2);
                 }
                 
                 if (rootIsDominant) {
-                    if (isMinor6) terminal.AddRole(LotusRole.Sm3, (distanceWeight + root[LotusRole.SD])/2);
-                    if (isMajor6) terminal.AddRole(LotusRole.SM3, (distanceWeight + root[LotusRole.SD])/2);
+                    if (isMinor6) terminal.AddRole(LotusRole.Sm3, (distanceWeight * root[LotusRole.SD])/2);
+                    if (isMajor6) terminal.AddRole(LotusRole.SM3, (distanceWeight * root[LotusRole.SD])/2);
                 }
 
                 if (terminalIsDominant) {
-                    if (isMinor3) root.AddRole(LotusRole.SM3, (distanceWeight + terminal[LotusRole.SD])/2);
-                    if (isMajor3) root.AddRole(LotusRole.Sm3, (distanceWeight + terminal[LotusRole.SD])/2);
+                    if (isMinor3) root.AddRole(LotusRole.SM3, (distanceWeight * terminal[LotusRole.SD])/2);
+                    if (isMajor3) root.AddRole(LotusRole.Sm3, (distanceWeight * terminal[LotusRole.SD])/2);
                 }
 
                 // * Limmatically Suspended Mediants
