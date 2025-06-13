@@ -16,9 +16,9 @@ namespace SineVita.Muguet.Nelumbo.Context {
             }
 
             _assignLotusRoles = DefaultAssignLotusRoles; // default
-            RoleWeightThreshold = 0.5; // default
+            RoleWeightThreshold = 0.0; // default
             _calculateStrandWeight = DefaultCalculateStrandWeight;
-            StrandWeightThreshold = 0.6; // default
+            StrandWeightThreshold = 0.0; // default
         }
         
         // * Properties

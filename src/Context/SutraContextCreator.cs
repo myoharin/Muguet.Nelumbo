@@ -50,17 +50,18 @@ namespace SineVita.Muguet.Nelumbo.Context
             // * 1st Pass - structural 5ths and stress.
             foreach (var dyad in dyads.Links) {
                 var reducedInterval = dyad.ReducedInterval;
-                var weight = 1.0d / Math.Ceiling(Math.Log(dyad.Interval.FrequencyRatio, 2)); // based on strict octave
+                var octaveWeight = Math.Pow(1.0d / Math.Ceiling(Math.Log(dyad.Interval.FrequencyRatio, 2)), 0.3d);
+                    // based on strict octave
                 
                 // Structural
                 if (context.Evaluate(reducedInterval, FormalIntervalClassification.P5)) {
-                    dyad.Root.AddRole(LotusRole.StructuralTonic, weight);
-                    dyad.Terminal.AddRole(LotusRole.StructuralDominant, weight);
+                    dyad.Root.AddRole(LotusRole.StructuralTonic, octaveWeight);
+                    dyad.Terminal.AddRole(LotusRole.StructuralDominant, octaveWeight);
                 }
 
                 if (context.Evaluate(reducedInterval, FormalIntervalClassification.P4)) {
-                    dyad.Root.AddRole(LotusRole.StructuralDominant, weight);
-                    dyad.Terminal.AddRole(LotusRole.StructuralTonic, weight);
+                    dyad.Root.AddRole(LotusRole.StructuralDominant, octaveWeight);
+                    dyad.Terminal.AddRole(LotusRole.StructuralTonic, octaveWeight);
                 }
 
                 // Direct Stress
@@ -68,15 +69,15 @@ namespace SineVita.Muguet.Nelumbo.Context
                     context.Evaluate(reducedInterval, FormalIntervalClassification.Tritone) ||
                     context.Evaluate(reducedInterval, FormalIntervalClassification.Major6th)
                    ) {
-                    dyad.Root.AddRole(LotusRole.StressDiminished, weight);
-                    dyad.Terminal.AddRole(LotusRole.StressDiminished, weight);
+                    dyad.Root.AddRole(LotusRole.StressDiminished, octaveWeight);
+                    dyad.Terminal.AddRole(LotusRole.StressDiminished, octaveWeight);
                 }
 
                 if (context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd) ||
                     context.Evaluate(reducedInterval, FormalIntervalClassification.Minor6th)
                    ) {
-                    dyad.Root.AddRole(LotusRole.StressAugmented, weight);
-                    dyad.Terminal.AddRole(LotusRole.StressAugmented, weight);
+                    dyad.Root.AddRole(LotusRole.StressAugmented, octaveWeight);
+                    dyad.Terminal.AddRole(LotusRole.StressAugmented, octaveWeight);
                 }
             }
 
@@ -85,15 +86,17 @@ namespace SineVita.Muguet.Nelumbo.Context
                 // Suspended Mediants
                 if (lotus.HasRole(LotusRole.SD) && lotus.HasRole(LotusRole.ST))
                     lotus.AddRole(LotusRole.SuspendedMediant, (lotus[LotusRole.SD] + lotus[LotusRole.ST]) / 2d);
+                // average of both strengths
 
             // * 3rd Pass - Dyad
             foreach (var dyad in dyads.Links) {
                 var reducedInterval = dyad.ReducedInterval;
                 var root = dyad.Root;
                 var terminal = dyad.Terminal;
-                var distanceWeight = 1.0 / dyad.Interval.FrequencyRatio;
-                var octaveWeight = 1.0d / Math.Ceiling(Math.Log(dyad.Interval.FrequencyRatio, 2)); // based on strict octave
-
+                var distanceWeight = Math.Pow(1.0 / dyad.Interval.FrequencyRatio, 0.3);
+                var octaveWeight = Math.Pow(1.0d / Math.Ceiling(Math.Log(dyad.Interval.FrequencyRatio, 2)), 0.3d);
+                    // based on strict octaves
+                    
                 // interval is
                 var isMajor3 = context.Evaluate(reducedInterval, FormalIntervalClassification.Major3rd);
                 var isMinor3 = context.Evaluate(reducedInterval, FormalIntervalClassification.Minor3rd);
@@ -147,7 +150,7 @@ namespace SineVita.Muguet.Nelumbo.Context
                 var root = dyad.Root;
                 var terminal = dyad.Terminal;
                 
-                var distanceWeight = 1 / dyad.Interval.FrequencyRatio;
+                var distanceWeight = Math.Pow(1.0 / dyad.Interval.FrequencyRatio, 0.3);
                 
                 var rootTonicWeight = root[LotusRole.StructuralTonic];
                 var rootDominantWeight = root[LotusRole.StructuralDominant];
@@ -167,51 +170,66 @@ namespace SineVita.Muguet.Nelumbo.Context
                 var rootIsDominant = root.HasRole(LotusRole.StructuralDominant);
                 var terminalIsTonic = terminal.HasRole(LotusRole.StructuralTonic);
                 var terminalIsDominant = terminal.HasRole(LotusRole.StructuralDominant);
+                
+                // fromcTonic and dominant - 8 exhaustive checks.
+                var rootRelatedDyads = dyads.GetNodeRelatedLinks(root); 
+                var terminalRelatedDyads = dyads.GetNodeRelatedLinks(terminal);
+                
+                bool IntervalUpFromRootExist(FormalIntervalClassification interval) => 
+                    rootRelatedDyads.Any(
+                        x => ReferenceEquals(x.Root, root) 
+                             && context.Evaluate(x.ReducedInterval, interval)
+                             );
+                bool IntervalDownFromTerminalExist(FormalIntervalClassification interval) => 
+                    terminalRelatedDyads.Any(
+                        x => ReferenceEquals(x.Terminal, terminal) 
+                             && context.Evaluate(x.ReducedInterval, interval)
+                    );
 
                 // * Dual Structural Implication
-                if (rootIsDominant) { // C [G B|Bb]
-                    if (isMajor3) {
+                if (rootIsDominant) { // C [G B|Bb] - check if B | Bb already exist - upper.
+                    if (isMajor3 && !IntervalUpFromRootExist(FormalIntervalClassification.Major3rd)) {
                         root.AddRole(LotusRole.Sm3, distanceWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.SD, rootDominantWeight * implicationMultiplier);
                     } // C [G B]
 
-                    if (isMinor3) {
+                    if (isMinor3 && !IntervalUpFromRootExist(FormalIntervalClassification.Minor3rd)) {
                         root.AddRole(LotusRole.SM3, distanceWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.SD, rootDominantWeight * implicationMultiplier);
                     } // C [G Bb]
                 }
 
-                if (rootIsTonic) { // C] G [Ab|A
-                    if (isMajor6) {
+                if (rootIsTonic) { // C] G [Ab|A - check if Ab | A already exist - upper. 
+                    if (isMajor6 && !IntervalUpFromRootExist(FormalIntervalClassification.Major6th)) {
                         root.AddRole(LotusRole.Sm3, distanceWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.ST, rootTonicWeight * implicationMultiplier);
                     }
 
-                    if (isMinor6) {
+                    if (isMinor6 && !IntervalUpFromRootExist(FormalIntervalClassification.Minor6th)) {
                         root.AddRole(LotusRole.SM3, distanceWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.ST, rootTonicWeight * implicationMultiplier);
                     }
                 }
 
-                if (terminalIsDominant) { // Bb|B] C [G
-                    if (isMajor6) {
+                if (terminalIsDominant) { // Bb|B] C [G - check if Bb | B already exist - Lower. 
+                    if (isMajor6 && !IntervalDownFromTerminalExist(FormalIntervalClassification.Major6th)) {
                         root.AddRole(LotusRole.SD, terminalDominantWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.SM3, distanceWeight * implicationMultiplier);
-                    } // [Ab C] G
+                    }
 
-                    if (isMinor6) {
+                    if (isMinor6 && !IntervalDownFromTerminalExist(FormalIntervalClassification.Minor6th)) {
                         root.AddRole(LotusRole.SD, terminalDominantWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.Sm3, distanceWeight * implicationMultiplier);
-                    } // [A C] G
+                    }
                 }
 
-                if (terminalIsTonic) { // [Ab|A C] G
-                    if (isMajor3) {
+                if (terminalIsTonic) { // [Ab|A C] G - check if Ab | A already exist - lower. 
+                    if (isMajor3 && !IntervalDownFromTerminalExist(FormalIntervalClassification.Major3rd)) {
                         root.AddRole(LotusRole.ST, terminalTonicWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.SM3, distanceWeight * implicationMultiplier);
                     } // [Ab C] G
 
-                    if (isMinor3) {
+                    if (isMinor3 && !IntervalDownFromTerminalExist(FormalIntervalClassification.Minor3rd)) {
                         root.AddRole(LotusRole.ST, terminalTonicWeight * implicationMultiplier);
                         terminal.AddRole(LotusRole.Sm3, distanceWeight * implicationMultiplier);
                     } // [A C] G
@@ -221,6 +239,7 @@ namespace SineVita.Muguet.Nelumbo.Context
             return true;
         }
         private static double DefaultCalculateStrandWeight(double antecedentWeight, double consequentWeight) {
+            // multiplicative average
             return Math.Sqrt(antecedentWeight * consequentWeight);
         }
 
