@@ -39,7 +39,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         public ILsfePatternReplicator<LotusThread> Replicate(LotusThread thread) {
             _antecedantRoles = new List<LotusRole>(thread.Antecedant.Roles);
             _consequentRoles = new List<LotusRole>(thread.Consequent.Roles);
-            _movementPattern = new ThreadMovementPattern(PitchInterval.Empty, 0).Replicate(thread.Movement);
+            _movementPattern = new StrictMovementPattern(PitchInterval.Empty, 0).Replicate(thread.Movement);
             return this;
         }
         

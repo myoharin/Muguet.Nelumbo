@@ -24,7 +24,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         }
         
         // * ILsfePattern
-        public object Clone() => new LotusStrandPattern((ThreadMovementPattern)_movementPattern.Clone(), _antecedantRole, _consequentRole);
+        public object Clone() => new LotusStrandPattern((StrictMovementPattern)_movementPattern.Clone(), _antecedantRole, _consequentRole);
         
         public bool MatchesExact(ILsfeParsable<LotusStrand> strand) {
             var strandObj = strand.Get();
@@ -48,7 +48,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         }
 
         public ILsfePatternReplicator<LotusStrand> Replicate(LotusStrand strand) {
-            var movementPattern = new ThreadMovementPattern(PitchInterval.Empty, 0).Replicate(strand.Movement);
+            var movementPattern = new StrictMovementPattern(PitchInterval.Empty, 0).Replicate(strand.Movement);
             return new LotusStrandPattern(
                 movementPattern,
                 _antecedantRole,

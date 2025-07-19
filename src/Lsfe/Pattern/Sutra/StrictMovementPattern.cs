@@ -3,7 +3,7 @@ using SineVita.Muguet.Nelumbo.Context;
 
 namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
 {
-    public class ThreadMovementPattern : 
+    public class StrictMovementPattern : 
         ILsfePatternReplicator<ThreadMovement>
     {
         // * Properties
@@ -15,37 +15,39 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         public bool IsGlm => _movement != GenericLocalMovement.NA;
         
         // * Constructor
-        private ThreadMovementPattern() {
+        private StrictMovementPattern() {
             _interval = PitchInterval.Empty;
             _movement = new GenericLocalMovement();
         }
-        public ThreadMovementPattern(PitchInterval interval, GenericLocalMovement movement)
+        public StrictMovementPattern(PitchInterval interval, GenericLocalMovement movement)
             : this() {
             SetInterval(interval, movement);
         }
-        public ThreadMovementPattern(PitchInterval interval, ISutraContextualizer contextualizer)
+        public StrictMovementPattern(PitchInterval interval, ISutraContextualizer contextualizer)
             : this() {
             SetInterval(interval, contextualizer);
         }
-        public ThreadMovementPattern(GenericLocalMovement movement) {
+        public StrictMovementPattern(GenericLocalMovement movement) {
             _interval = PitchInterval.Empty;
             SetInterval(movement);
         }
         
+        // * SetInterval
         public void SetInterval(PitchInterval interval, GenericLocalMovement movement) {
             _interval = interval;
             _movement = movement;
         }
-        public void SetInterval(PitchInterval interval, ISutraContextualizer contextualizer) {
+        public bool SetInterval(PitchInterval interval, ISutraContextualizer contextualizer) {
             _interval = interval;
             _movement = GenericLocalMovement.NA;
             var context = contextualizer.Context;
             foreach (var movement in Enum.GetValues<GenericLocalMovement>()) {
                 if (context[movement](Interval)) {
                     _movement = movement;
-                    break;
+                    return true;
                 }
             }
+            return false;
         }
         public void SetInterval(GenericLocalMovement movement) {
             _movement = movement;
@@ -65,7 +67,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
         }
         
         // * ILsfePattern
-        public object Clone() => new ThreadMovementPattern((PitchInterval)_interval.Clone(), _movement);
+        public object Clone() => new StrictMovementPattern((PitchInterval)_interval.Clone(), _movement);
         public bool MatchesExact(ILsfeParsable<ThreadMovement> movement) {
             var threadMovement = movement.Get();
             return (_movement.Equals(threadMovement.GenericLocalMovement) 
