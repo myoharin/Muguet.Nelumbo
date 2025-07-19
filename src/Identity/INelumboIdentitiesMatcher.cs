@@ -7,5 +7,6 @@ namespace SineVita.Muguet.Nelumbo.Identity
     {
         public Type IdentityType => typeof(TIdentity);
         public bool Matches(TIdentity identity, ILsfeParsable<TMatchMedium> t);
+        public List<TIdentity> Matches(ILsfeParsable<TMatchMedium> t);
     }
 }

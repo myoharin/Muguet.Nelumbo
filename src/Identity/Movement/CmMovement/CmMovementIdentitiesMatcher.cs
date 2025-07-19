@@ -14,5 +14,24 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement
         // * Matches
         public bool Matches(CmMovementIdentity identity, ILsfeParsable<LotusThread> thread) => CmMovementInternalData.Evaluations[identity.EnumValue].MatchesExact(thread);
         public bool Matches(CmMovementIdentity identity, ILsfeParsable<LotusStrand> strand) => CmMovementInternalData.Evaluations[identity.EnumValue].MatchContains(strand);
+
+        public List<CmMovementIdentity> Matches(ILsfeParsable<LotusStrand> strand) {
+            List<CmMovementIdentity> identities = new();
+            foreach (var val in Enum.GetValues<CmMovementIdentityEnum>()) {
+                if (CmMovementInternalData.Evaluations[val].MatchContains(strand)) {
+                    identities.Add(new(val));
+                }
+            }
+            return identities;
+        }
+        public List<CmMovementIdentity> Matches(ILsfeParsable<LotusThread> thread) {
+            List<CmMovementIdentity> identities = new();
+            foreach (var val in Enum.GetValues<CmMovementIdentityEnum>()) {
+                if (CmMovementInternalData.Evaluations[val].MatchesExact(thread)) {
+                    identities.Add(new(val));
+                }
+            }
+            return identities;
+        }
     }
 }

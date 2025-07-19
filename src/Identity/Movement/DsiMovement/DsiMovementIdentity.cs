@@ -1,17 +1,5 @@
-namespace SineVita.Muguet.Nelumbo.Identity.Movement
+﻿namespace SineVita.Muguet.Nelumbo.Identity.Movement.DsiMovement
 {
-    public enum DsiMovementIdentityEnum
-    {
-        DIM0,
-        DIM1,
-        DIM2,
-
-        AUG0,
-        AUG1,
-        AUG2,
-        AUG3
-    }
-    
     public class DsiMovementIdentity : Identity
     {
         private DsiMovementIdentityEnum _value;

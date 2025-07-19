@@ -8,7 +8,7 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
     {
         public bool DefinedAntecedent;
         public bool DefinedConsequent;
-        public BiDirectionalMovementPattern ThreadPattern;
+        public BiDirectionalGlmPattern ThreadPattern;
         public LotusRole AntecedentRole;
         public LotusRole ConsequentRole;
        
@@ -25,7 +25,7 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
             this.DefinedAntecedent = definedAntecedent;
             this.DefinedConsequent = definedConsequent;
             
-            ThreadPattern = new BiDirectionalMovementPattern(glm);
+            ThreadPattern = new BiDirectionalGlmPattern(glm);
         }
     }
 
