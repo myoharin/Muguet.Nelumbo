@@ -1,8 +1,8 @@
 ﻿using SineVita.Muguet.Nelumbo.Lsfe;
 
-namespace SineVita.Muguet.Nelumbo.Identity
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity
 {
-    public interface INelumboIdentityMatcher<T>
+    public interface IMovementIdentityMatcher<T>
     {
         public Identity Identity { get; }
         public bool Matches(ILsfeParsable<T> t);

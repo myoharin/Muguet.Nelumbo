@@ -1,6 +1,6 @@
-namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity.CmMovement.Internal
 {
-    public enum CmMovementIdentityEnum
+    internal enum CmMovementIdentityEnum
     {
         mDm3m,
         mDM3m,

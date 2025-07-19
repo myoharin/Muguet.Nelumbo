@@ -2,17 +2,17 @@
 using SineVita.Muguet.Nelumbo.Lsfe.Pattern;
 using SineVita.Muguet.Nelumbo.Sutra;
 
-namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity.CmMovement.Internal
 {
     internal class CmMovementIdentityCollumn :
         ILsfePattern<LotusThread>,
         ILsfePatternContainer<LotusStrand>
     {
-        public List<CmMovementIdentityRow> Rows { get; init; }
-
         public CmMovementIdentityCollumn(List<CmMovementIdentityRow> rows) {
             Rows = rows;
         }
+
+        public List<CmMovementIdentityRow> Rows { get; init; }
 
         public bool MatchesExact(ILsfeParsable<LotusThread> thread) { // KEY
             var threadObj = thread.Get();
@@ -30,25 +30,29 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
 
                 if (definedAntecedent && definedConsequent) return true;
             }
+
             return false;
         }
 
-        public bool MatchesExact(ILsfeParsable<LotusStrand> strand) => false;
+        public object Clone() {
+            return new CmMovementIdentityCollumn(new List<CmMovementIdentityRow>(Rows));
+        }
+
+        public bool MatchesExact(ILsfeParsable<LotusStrand> strand) {
+            return false;
+        }
+
         public bool MatchContains(ILsfeParsable<LotusStrand> strand) { // Test
             var strandObj = strand.Get();
-            foreach (var row in Rows) {
+            foreach (var row in Rows)
                 if (
                     strandObj.AntecedantRole == row.AntecedentRole
                     && strandObj.ConsequentRole == row.ConsequentRole
                     && row.ThreadPattern.MatchContains(strandObj.Movement)
-                ) return true;
-            }
+                )
+                    return true;
 
             return false;
         }
-
-        public object Clone() => new CmMovementIdentityCollumn(new(Rows));
-        
     }
-
 }

@@ -3,7 +3,7 @@ using SineVita.Muguet.Nelumbo.Lily;
 using SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra;
 using SineVita.Muguet.Nelumbo.Sutra;
 
-namespace SineVita.Muguet.Nelumbo.Identity.Movement.DsiMovement.Internal
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity.DsiMovement.Internal
 {
     internal static class DsiMovementInternalData
     {
@@ -50,13 +50,13 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.DsiMovement.Internal
             DsiMovementIdentityEnum.DIM0,
             DsiMovementIdentityEnum.DIM2,
         };
-        static bool Evaluate(LotusRole antecedent, GenericLocalMovement movement,
+        public static bool Evaluate(LotusRole antecedent, GenericLocalMovement movement,
             LotusRole consequent, out DsiMovementIdentityEnum identity) {
             // evaluation based on LINK: https://docs.google.com/spreadsheets/d/17E1ty6WEtYoX4hQ8Z9mAV7nzxbON1kXQ_RuXJNE99bE/edit?gid=1414051925#gid=1414051925
             
             // reduction
             movement = new BiDirectionalGlmPattern(movement).Lowest.Movement;
-            identity = 0;
+            identity = 0; // default value
             
             // calculation
             int sum = 0;

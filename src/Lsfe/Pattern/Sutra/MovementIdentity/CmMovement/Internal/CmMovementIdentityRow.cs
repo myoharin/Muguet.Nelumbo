@@ -2,7 +2,7 @@
 using SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra;
 using SineVita.Muguet.Nelumbo.Sutra;
 
-namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity.CmMovement.Internal
 {
     internal struct CmMovementIdentityRow
     {
@@ -11,22 +11,20 @@ namespace SineVita.Muguet.Nelumbo.Identity.Movement.CmMovement.Internal
         public BiDirectionalGlmPattern ThreadPattern;
         public LotusRole AntecedentRole;
         public LotusRole ConsequentRole;
-       
+
         public CmMovementIdentityRow(
             GenericLocalMovement glm,
             LotusRole antecedentRole,
             LotusRole consequentRole,
             bool definedAntecedent,
             bool definedConsequent
-        ) 
-        {
-            this.AntecedentRole = antecedentRole;
-            this.ConsequentRole = consequentRole;
-            this.DefinedAntecedent = definedAntecedent;
-            this.DefinedConsequent = definedConsequent;
-            
+        ) {
+            AntecedentRole = antecedentRole;
+            ConsequentRole = consequentRole;
+            DefinedAntecedent = definedAntecedent;
+            DefinedConsequent = definedConsequent;
+
             ThreadPattern = new BiDirectionalGlmPattern(glm);
         }
     }
-
 }

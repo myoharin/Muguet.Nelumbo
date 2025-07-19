@@ -1,8 +1,8 @@
 ﻿using SineVita.Muguet.Nelumbo.Lsfe;
 
-namespace SineVita.Muguet.Nelumbo.Identity
+namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity
 {
-    public interface INelumboIdentitiesMatcher<TIdentity, TMatchMedium> 
+    public interface IMovementIdentitiesMatcher<TIdentity, TMatchMedium> 
         where TIdentity : Identity
     {
         public Type IdentityType => typeof(TIdentity);
