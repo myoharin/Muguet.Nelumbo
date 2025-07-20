@@ -1,4 +1,4 @@
-﻿using SineVita.Muguet.Nelumbo.Identity;
+﻿using SineVita.Muguet.Nelumbo;
 
 namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra.MovementIdentity
 {   
