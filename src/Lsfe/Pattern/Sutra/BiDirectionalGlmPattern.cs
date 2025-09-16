@@ -37,7 +37,7 @@ namespace SineVita.Muguet.Nelumbo.Lsfe.Pattern.Sutra
             this.ThreadPatterns = movement switch {
                 GenericLocalMovement.D8 => new(new(GenericLocalMovement.D8), new(GenericLocalMovement.U), new(GenericLocalMovement.U8)),
                 GenericLocalMovement.D5 => new(new(GenericLocalMovement.D5), new(GenericLocalMovement.U4), new(GenericLocalMovement.U4)),
-                GenericLocalMovement.D4 => new(new(GenericLocalMovement.D4), new(GenericLocalMovement.D4), new(GenericLocalMovement.U5)),
+                GenericLocalMovement.D4 => new (new(GenericLocalMovement.D4), new(GenericLocalMovement.D4), new(GenericLocalMovement.U5)),
                 GenericLocalMovement.U  => new(new(GenericLocalMovement.D8), new(GenericLocalMovement.U), new(GenericLocalMovement.U8)),
                 GenericLocalMovement.U4 => new(new(GenericLocalMovement.D5), new(GenericLocalMovement.U4), new(GenericLocalMovement.U4)),
                 GenericLocalMovement.U5 => new(new(GenericLocalMovement.D4), new(GenericLocalMovement.D4), new(GenericLocalMovement.U5)),
